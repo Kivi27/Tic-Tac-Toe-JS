@@ -1,6 +1,7 @@
 class GameManager {
     _countRow = 3;
     _countColumn = 3;
+    _blockGame = false;
 
     constructor(buttons, labelPlayerName, players) {
         this._players = players;
@@ -15,70 +16,92 @@ class GameManager {
         this.updateLabelPlayerName(this._currentPlayer);
     }
 
-    checkHorizontal(player) {
+    getWinElementsHorizontal(player) {
         for (let i = 0; i < this._countRow; i++) {
+            let winButton = [];
             let countScore = 0;
             const playerSymbol = player.getGameSymbol();
             for (let j = 0; j < this._countColumn; j++) {
                 if (this._gameField[i][j].textContent === playerSymbol) {
+                    winButton.push(this._gameField[i][j]);
                     countScore++;
                 }
             }
             if (countScore === this._countColumn) {
-                return true;
+                return winButton;
             }
         }
-        return false;
+        return null;
     }
 
-    checkVertical(player) {
+    getWinElementsVertical(player) {
         for (let j = 0; j < this._countColumn; j++) {
+            let winButton = [];
             let countScore = 0;
             const playerSymbol = player.getGameSymbol();
             for (let i = 0; i < this._countRow; i++) {
                 if (this._gameField[i][j].textContent === playerSymbol) {
+                    winButton.push(this._gameField[i][j]);
                     countScore++;
                 }
             }
             if (countScore === this._countRow) {
-                return true;
+                return winButton;
             }
         }
-        return false;
+        return null;
     }
 
-    checkMainDiagonal(player) {
+    getWinElementsMainDiagonal(player) {
+        let winButton = [];
         let countScore = 0;
         const playerSymbol = player.getGameSymbol();
         for (let i = 0; i < this._countRow; i++) {
             if (this._gameField[i][i].textContent === playerSymbol) {
+                winButton.push(this._gameField[i][i]);
                 countScore++;
             }
         }
-        return countScore === this._countRow;
+        return countScore === this._countRow ? winButton : null;
     }
 
-    checkSideDiagonal(player) {
+    getWinElementsSideDiagonal(player) {
         let countScore = 0;
+        let winButton = [];
         const playerSymbol = player.getGameSymbol();
         for (let i = 0; i < this._countRow; i++) {
-            if (this._gameField[i][this._countColumn - i - 1].textContent === playerSymbol) {
+            let columnIndex = this._countColumn - i - 1;
+            if (this._gameField[i][columnIndex].textContent === playerSymbol) {
+                winButton.push(this._gameField[i][columnIndex]);
                 countScore++;
             }
         }
-        return countScore === this._countRow;
+        return countScore === this._countRow ? winButton : null;
     }
 
-    checkWin(player) {
-        return this.checkHorizontal(player) || this.checkVertical(player) ||
-            this.checkMainDiagonal(player) || this.checkSideDiagonal(player)
+    getWinElements(player) {
+        return this.getWinElementsHorizontal(player) || this.getWinElementsVertical(player) ||
+            this.getWinElementsMainDiagonal(player) || this.getWinElementsSideDiagonal(player);
     }
 
-    updateLabelPlayerName(newPlayer) {
-        this._labelPlayerName.textContent = newPlayer.getName();
+    updateLabelPlayerName(player) {
+        this._labelPlayerName.textContent = player.getName();
     }
+
     changeCurrentPlayer() {
         this._currentPlayer = this._currentPlayer === this._players[0] ? this._players[1] : this._players[0];
+    }
+
+    addStyleWinElements(winElements) {
+        winElements.forEach(item => item.classList.add("tic_tac-toe__сell_win"));
+    }
+
+    removeStyleWinElements() {
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                this._gameField[i][j].classList.remove("tic_tac-toe__сell_win");
+            }
+        }
     }
 
     clearField() {
@@ -89,14 +112,18 @@ class GameManager {
         }
         this._currentPlayer = this._players[0];
         this.updateLabelPlayerName(this._currentPlayer);
+        this.removeStyleWinElements();
+        this._blockGame = false;
     }
 
     gameStep(e) {
         const pressedButton = e.target;
-        if (pressedButton.textContent === "") {
+        if (pressedButton.textContent === "" && !this._blockGame) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
-            if (this.checkWin(this._currentPlayer)) {
-                alert("WIIIIIIINNNNN");
+            let winElements = this.getWinElements(this._currentPlayer);
+            if (winElements) {
+                this._blockGame = true;
+                this.addStyleWinElements(winElements);
             } else {
                 this.changeCurrentPlayer();
                 this.updateLabelPlayerName(this._currentPlayer);

@@ -4,6 +4,7 @@
     --cell-border-color: #0DA192;
     --cell-border-width: 10px;
     --primary-color: #FFFFFF;
+    --win-color: #F00518;
 }
 
 html, body {
@@ -33,6 +34,7 @@ html, body {
 .header__title {
     padding: 40px;
     font-size: 2rem;
+    text-transform: uppercase;
 }
 
 .tic-tac-toe {
@@ -68,6 +70,10 @@ html, body {
 
 .tic-tac-toe__cell_top-border {
     border-top: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+.tic_tac-toe__сell_win {
+    color: var(--win-color);
 }
 
 .tic-tac-toe-HUD__common-style {
