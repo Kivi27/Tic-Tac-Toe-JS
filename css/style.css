@@ -1,4 +1,5 @@
 :root {
+    --brand-primary-darken-color: #0B6158;
     --brand-primary-color: #14BDAC;
     --cell-border-color: #0DA192;
     --cell-border-width: 10px;
@@ -67,6 +68,29 @@ html, body {
 
 .tic-tac-toe__cell_top-border {
     border-top: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+.tic-tac-toe-HUD__common-style {
+    padding: 20px;
+    font-size: 1.5rem;
+    font-family: "Comic Sans MS", serif;
+    font-weight: 700;
+    color: var(--primary-color);
+    background-color: var(--brand-primary-darken-color);
+}
+
+.tic-tac-toe-HUD__player-info {
+    margin-top: 60px;
+    text-align: center;
+    border-radius: 10px;
+}
+
+.tic-tac-toe-HUD__reset-button {
+    width: 100%;
+    margin-top: 25px;
+    border: none;
+    border-radius: 10px;
+    text-transform: uppercase;
 }
 
 .footer {

@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Tic-Tac-Toe</title>
-  <link href="css/reset.css" rel="stylesheet">
-  <link href="css/style.css" rel="stylesheet">
-  <script src="js/script.js"></script>
+    <meta charset="UTF-8">
+    <title>Tic-Tac-Toe</title>
+    <link href="css/reset.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <script src="js/Player.js"></script>
+    <script src="js/GameManager.js"></script>
 </head>
 <body>
     <div class="container">
@@ -13,33 +14,43 @@
             <h1 class="header__title">Created by Liashenko Rostyslav</h1>
         </header>
         <main class="main">
-            <section class="center-container tic-tac-toe">
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_bottom-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_bottom-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border">
-                    <button class="tic-tac-toe__button"></button>
-                </div>
-                <div class="tic_tac-toe__сell">
-                    <button class="tic-tac-toe__button"></button>
+            <section class="center-container">
+                <div class="tic-tac-toe-game">
+                    <div class="tic-tac-toe">
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_bottom-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_bottom-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                        <div class="tic_tac-toe__сell">
+                            <button class="tic-tac-toe__button"></button>
+                        </div>
+                    </div>
+                    <div class="tic-tac-toe-HUD">
+                        <div class="tic-tac-toe-HUD__player-info tic-tac-toe-HUD__common-style">
+                            Player's turn: <span class="tic-tac-toe__player-name"></span>
+                        </div>
+                        <button class="tic-tac-toe-HUD__reset-button tic-tac-toe-HUD__common-style">reset</button>
+                    </div>
                 </div>
             </section>
         </main>
@@ -47,5 +58,6 @@
             All rights reserved 2022 &#169
         </footer>
     </div>
+    <script src="js/script.js"></script>
 </body>
 </html>
