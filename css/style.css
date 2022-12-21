@@ -1,0 +1,75 @@
+:root {
+    --brand-primary-color: #14BDAC;
+    --cell-border-color: #0DA192;
+    --cell-border-width: 10px;
+    --primary-color: #FFFFFF;
+}
+
+html, body {
+    height: 100%;
+}
+
+.center-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    max-width: 1920px;
+    max-height: 900px;
+    height: 100%;
+    margin: 0 auto;
+    font-family: 'Comic Sans MS', serif;
+    font-weight: 700;
+    background-color: var(--brand-primary-color);
+    color: var(--primary-color);
+}
+
+.header__title {
+    padding: 40px;
+    font-size: 2rem;
+}
+
+.tic-tac-toe {
+    display: grid;
+    grid-template: 100px 100px 100px / 100px 100px 100px;
+}
+
+.tic-tac-toe__button {
+    width: 100px;
+    height: 100px;
+    font-weight: 800;
+    font-size: 3rem;
+    background: none;
+    border: none;
+    color: var(--primary-color);
+}
+
+.tic-tac-toe__button:hover {
+    cursor: pointer;
+}
+
+.tic-tac-toe__cell_right-border {
+    border-right: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+.tic-tac-toe__cell_left-border {
+    border-left: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+.tic-tac-toe__cell_bottom-border {
+    border-bottom: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+.tic-tac-toe__cell_top-border {
+    border-top: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+.footer {
+    padding: 20px;
+    text-align: center;
+}
