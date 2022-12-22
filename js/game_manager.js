@@ -110,7 +110,7 @@ class Game_manager {
     }
 
     addStyleWinElements(winElements) {
-        winElements.forEach(item => item.classList.add("tic_tac-toe__сell_win"));
+        winElements.forEach(winCell => winCell.classList.add("tic_tac-toe__сell_win"));
     }
 
     removeStyleWinElements() {
