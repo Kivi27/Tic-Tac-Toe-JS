@@ -5,10 +5,10 @@ const buttons = Array.from(document.querySelectorAll(".tic-tac-toe__button"));
 const resetButton = document.querySelector(".tic-tac-toe-HUD__reset-button");
 const labelPlayerName = document.querySelector(".tic-tac-toe__player-name");
 
-const gameManager = new GameManager(buttons, labelPlayerName,[player1, player2]);
+const gameManager = new Game_manager(buttons, labelPlayerName,[player1, player2]);
 
 for (let button of buttons) {
     button.addEventListener("click", (e) => gameManager.gameStep(e));
 }
 
-resetButton.addEventListener("click", () => gameManager.clearField());
+resetButton.addEventListener("click", (pressedEvent) => gameManager.clearField());

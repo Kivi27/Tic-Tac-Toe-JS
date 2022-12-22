@@ -5,6 +5,7 @@
     --cell-border-width: 10px;
     --primary-color: #FFFFFF;
     --win-color: #FAE20A;
+    --hover-reset-button-color: #FAE20A;
 }
 
 html, body {
@@ -97,6 +98,11 @@ html, body {
     border: none;
     border-radius: 10px;
     text-transform: uppercase;
+}
+
+.tic-tac-toe-HUD__reset-button:hover {
+    cursor: pointer;
+    color: var(--hover-reset-button-color);
 }
 
 .footer {
