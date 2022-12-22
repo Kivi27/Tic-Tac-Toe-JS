@@ -7,15 +7,13 @@ class Ui_manager {
         this._labelPlayerName.textContent = player.getName();
     }
 
-    addStyleWinElements(winElements) {
-        winElements.forEach(winCell => winCell.classList.add("tic_tac-toe__сell_win"));
+    addStyle(allCells, nameStyle) {
+        allCells.forEach(cell => cell.classList.add(nameStyle));
     }
 
-    removeStyleWinElements(allCells, countRow, countColumn) {
-        for (let i = 0; i < countRow; i++) {
-            for (let j = 0; j < countColumn; j++) {
-                allCells[i][j].classList.remove("tic_tac-toe__сell_win");
-            }
-        }
+    removeStyle(Field, nameStyle) {
+        Field.forEach(row => {
+            row.forEach(cell => cell.classList.remove(nameStyle));
+        });
     }
 }

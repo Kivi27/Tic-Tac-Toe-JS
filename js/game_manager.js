@@ -26,6 +26,10 @@ class Game_manager {
         this._onReset = callback;
     }
 
+    setOnDraw(callback) {
+        this._onDraw = callback;
+    }
+
     getField() {
         let field = new Array(this._countRow);
         for (let i = 0; i < this._countRow; i++) {
@@ -96,6 +100,23 @@ class Game_manager {
         }
         return winButton.length === this._countColumn ? winButton : null;
     }
+
+    isFieldFill() {
+        let isFill = true;
+
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                const currentValue = this._gameField[i][j].textContent;
+                if (currentValue === "") {
+                    isFill = false;
+                    break;
+                }
+            }
+        }
+
+        return isFill;
+    }
+
 
     getWinElementsVertical(player) {
         let winButton = [];
@@ -184,7 +205,7 @@ class Game_manager {
         }
 
         this._currentPlayer = this._players[0];
-        this._onReset(this._gameField, this._countRow, this._countColumn);
+        this._onReset(this._gameField);
         this._blockGame = false;
         this._OnUpdateUi();
     }
@@ -197,6 +218,10 @@ class Game_manager {
             if (!this.checkWin()) {
                 this.changeCurrentPlayer();
                 this._OnUpdateUi();
+
+                if (this.isFieldFill()) {
+                    this._onDraw(this._gameField);
+                }
             }
         }
     }
