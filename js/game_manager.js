@@ -3,19 +3,20 @@ class Game_manager {
     _countColumn = 3;
     _blockGame = false;
 
-    constructor(buttons, labelPlayerName, players) {
+    constructor(buttons, players) {
         this._players = players;
         this._currentPlayer = this._players[0];
-        this._labelPlayerName = labelPlayerName;
         this._gameField = [];
 
         for (let i = 0, j = 0; j < buttons.length; i++, j += this._countColumn) {
             this._gameField[i] = buttons.slice(j, j + this._countColumn);
         }
-
-        this.updateLabelPlayerName(this._currentPlayer);
     }
 
+    setUpdateUI(callback) {
+        this._updateUi = callback;
+        this._updateUi();
+    }
 
     getField() {
         let field = new Array(this._countRow);
@@ -49,12 +50,21 @@ class Game_manager {
         this._currentPlayer = this._players[idx];
     }
 
-    getIsBlockGame() {
-        return this._blockGame;
+    getStateSave() {
+        const stateField = this.getField();
+        const indexCurrentPlayer = this.getIndexCurrentPlayer();
+
+        return {
+            "stateField": stateField,
+            "indexCurrentPlayer": indexCurrentPlayer,
+        };
     }
 
-    setIsBlockGame(value) {
-        this._blockGame = value;
+    setStateSave(saveObj) {
+        this.setField(saveObj.stateField);
+        this.setCurrentPlayer(saveObj.indexCurrentPlayer);
+        this.checkWin();
+        this._updateUi();
     }
 
     getWinElementsHorizontal(player) {
@@ -141,10 +151,6 @@ class Game_manager {
             || this.getWinElementsSideDiagonal(player);
     }
 
-    updateLabelPlayerName(player) {
-        this._labelPlayerName.textContent = player.getName();
-    }
-
     changeCurrentPlayer() {
         this._currentPlayer = this._currentPlayer === this._players[0] ? this._players[1] : this._players[0];
     }
@@ -162,15 +168,16 @@ class Game_manager {
     }
 
     checkWin() {
+        let isWin = false;
         const winElements = this.getWinElements(this._currentPlayer);
 
-        if (winElements) {
+        if (winElements != null) {
             this._blockGame = true;
             this.addStyleWinElements(winElements);
-        } else {
-            this.changeCurrentPlayer();
-            this.updateLabelPlayerName(this._currentPlayer);
+            isWin = true;
         }
+
+        return isWin;
     }
 
     clearField() {
@@ -181,9 +188,9 @@ class Game_manager {
         }
 
         this._currentPlayer = this._players[0];
-        this.updateLabelPlayerName(this._currentPlayer);
         this.removeStyleWinElements();
         this._blockGame = false;
+        this._updateUi();
     }
 
     gameStep(pressedEvent) {
@@ -191,7 +198,10 @@ class Game_manager {
 
         if (pressedButton.textContent === "" && !this._blockGame) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
-            this.checkWin();
+            if (!this.checkWin()) {
+                this.changeCurrentPlayer();
+                this._updateUi();
+            }
         }
     }
 }
