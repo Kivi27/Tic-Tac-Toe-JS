@@ -9,12 +9,52 @@ class Game_manager {
         this._labelPlayerName = labelPlayerName;
         this._gameField = [];
 
-        // TODO: foreach
         for (let i = 0, j = 0; j < buttons.length; i++, j += this._countColumn) {
             this._gameField[i] = buttons.slice(j, j + this._countColumn);
         }
 
         this.updateLabelPlayerName(this._currentPlayer);
+    }
+
+
+    getField() {
+        let field = new Array(this._countRow);
+        for (let i = 0; i < this._countRow; i++) {
+            field[i] = new Array(this._countColumn);
+
+            for (let j = 0; j < this._countColumn; j++) {
+                field[i][j] = this._gameField[i][j].textContent;
+            }
+        }
+        return field;
+    }
+
+    setField(newField) {
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                this._gameField[i][j].textContent = newField[i][j];
+            }
+        }
+    }
+
+    getIndexCurrentPlayer() {
+        return this._players.findIndex(player => player === this._currentPlayer);
+    }
+
+    getCurrentPlayer() {
+        return this._currentPlayer;
+    }
+
+    setCurrentPlayer(idx) {
+        this._currentPlayer = this._players[idx];
+    }
+
+    getIsBlockGame() {
+        return this._blockGame;
+    }
+
+    setIsBlockGame(value) {
+        this._blockGame = value;
     }
 
     getWinElementsHorizontal(player) {
@@ -121,6 +161,19 @@ class Game_manager {
         }
     }
 
+
+    checkWin() {
+        const winElements = this.getWinElements(this._currentPlayer);
+
+        if (winElements) {
+            this._blockGame = true;
+            this.addStyleWinElements(winElements);
+        } else {
+            this.changeCurrentPlayer();
+            this.updateLabelPlayerName(this._currentPlayer);
+        }
+    }
+
     clearField() {
         for (let i = 0; i < this._countRow; i++) {
             for (let j = 0; j < this._countColumn; j++) {
@@ -139,15 +192,7 @@ class Game_manager {
 
         if (pressedButton.textContent === "" && !this._blockGame) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
-            const winElements = this.getWinElements(this._currentPlayer);
-
-            if (winElements) {
-                this._blockGame = true;
-                this.addStyleWinElements(winElements);
-            } else {
-                this.changeCurrentPlayer();
-                this.updateLabelPlayerName(this._currentPlayer);
-            }
+            this.checkWin();
         }
     }
 }
