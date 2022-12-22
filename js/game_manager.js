@@ -13,9 +13,17 @@ class Game_manager {
         }
     }
 
-    setUpdateUI(callback) {
-        this._updateUi = callback;
-        this._updateUi();
+    setOnUpdateUi(callback) {
+        this._OnUpdateUi = callback;
+        this._OnUpdateUi();
+    }
+
+    setOnWin(callback) {
+        this._onWin = callback;
+    }
+
+    setOnReset(callback) {
+        this._onReset = callback;
     }
 
     getField() {
@@ -64,7 +72,7 @@ class Game_manager {
         this.setField(saveObj.stateField);
         this.setCurrentPlayer(saveObj.indexCurrentPlayer);
         this.checkWin();
-        this._updateUi();
+        this._OnUpdateUi();
     }
 
     getWinElementsHorizontal(player) {
@@ -155,25 +163,13 @@ class Game_manager {
         this._currentPlayer = this._currentPlayer === this._players[0] ? this._players[1] : this._players[0];
     }
 
-    addStyleWinElements(winElements) {
-        winElements.forEach(winCell => winCell.classList.add("tic_tac-toe__сell_win"));
-    }
-
-    removeStyleWinElements() {
-        for (let i = 0; i < this._countRow; i++) {
-            for (let j = 0; j < this._countColumn; j++) {
-                this._gameField[i][j].classList.remove("tic_tac-toe__сell_win");
-            }
-        }
-    }
-
     checkWin() {
         let isWin = false;
         const winElements = this.getWinElements(this._currentPlayer);
 
         if (winElements != null) {
             this._blockGame = true;
-            this.addStyleWinElements(winElements);
+            this._onWin(winElements);
             isWin = true;
         }
 
@@ -188,9 +184,9 @@ class Game_manager {
         }
 
         this._currentPlayer = this._players[0];
-        this.removeStyleWinElements();
+        this._onReset(this._gameField, this._countRow, this._countColumn);
         this._blockGame = false;
-        this._updateUi();
+        this._OnUpdateUi();
     }
 
     gameStep(pressedEvent) {
@@ -200,7 +196,7 @@ class Game_manager {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
             if (!this.checkWin()) {
                 this.changeCurrentPlayer();
-                this._updateUi();
+                this._OnUpdateUi();
             }
         }
     }

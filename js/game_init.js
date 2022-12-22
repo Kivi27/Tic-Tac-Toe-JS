@@ -9,10 +9,18 @@ const labelPlayerName = document.querySelector(".tic-tac-toe__player-name");
 
 const uiManager = new Ui_manager(labelPlayerName);
 const gameManager = new Game_manager(cellsTicTacToe,[player1, player2]);
-gameManager.setUpdateUI(() => {
+gameManager.setOnUpdateUi(() => {
     const currentPlayer = gameManager.getCurrentPlayer();
     uiManager.updateLabelPlayerName(currentPlayer);
 });
+
+gameManager.setOnWin((winCells) => {
+    uiManager.addStyleWinElements(winCells);
+});
+
+gameManager.setOnReset( (allCells, countRow, countColumn) => {
+    uiManager.removeStyleWinElements(allCells, countRow, countColumn);
+})
 
 if (localStorage.getItem(saveKey)) {
     Game_saver.loadGame(saveKey, gameManager);
