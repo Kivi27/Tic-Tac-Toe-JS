@@ -161,7 +161,6 @@ class Game_manager {
         }
     }
 
-
     checkWin() {
         const winElements = this.getWinElements(this._currentPlayer);
 

@@ -11,7 +11,6 @@ const gameManager = new Game_manager(buttons, labelPlayerName,[player1, player2]
 if (localStorage.getItem(saveKey)) {
     Game_saver.loadGame(saveKey, gameManager, () => {
         gameManager.updateLabelPlayerName(gameManager.getCurrentPlayer());
-        gameManager.checkWin();
     });
     console.log("load manager from local storage.....");
 }
