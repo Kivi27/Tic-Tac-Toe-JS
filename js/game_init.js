@@ -3,12 +3,12 @@ const saveKey = "game_manager";
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
 
-const buttons = Array.from(document.querySelectorAll(".tic-tac-toe__button"));
+const cellsTicTacToe = Array.from(document.querySelectorAll(".tic-tac-toe__button"));
 const resetButton = document.querySelector(".tic-tac-toe-hud__reset-button");
 const labelPlayerName = document.querySelector(".tic-tac-toe__player-name");
 
 const uiManager = new Ui_manager(labelPlayerName);
-const gameManager = new Game_manager(buttons,[player1, player2]);
+const gameManager = new Game_manager(cellsTicTacToe,[player1, player2]);
 gameManager.setUpdateUI(() => {
     const currentPlayer = gameManager.getCurrentPlayer();
     uiManager.updateLabelPlayerName(currentPlayer);
@@ -19,7 +19,7 @@ if (localStorage.getItem(saveKey)) {
     console.log("load manager from local storage.....");
 }
 
-for (let button of buttons) {
+for (let button of cellsTicTacToe) {
     button.addEventListener("click", (pressedButton) => {
         gameManager.gameStep(pressedButton);
         Game_saver.saveGame(saveKey, gameManager);
