@@ -15,15 +15,15 @@ gameManager.setOnUpdateUi(() => {
     uiManager.updateLabelPlayerName(currentPlayer);
 });
 
-gameManager.setOnWin((winCells) => {
+gameManager.setOnWin(winCells => {
     uiManager.addStyle(winCells, nameWinStyle);
 });
 
-gameManager.setOnReset((allCells) => {
+gameManager.setOnReset(allCells => {
     uiManager.removeStyle(allCells, nameWinStyle);
 });
 
-gameManager.setOnDraw((allCells) => {
+gameManager.setOnDraw(allCells => {
     uiManager.addStyle(allCells, "tic-tac-toe__cell_draw");
 });
 
