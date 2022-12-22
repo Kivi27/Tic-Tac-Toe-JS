@@ -3,19 +3,28 @@ class Game_manager {
     _countColumn = 3;
     _blockGame = false;
 
-    constructor(buttons, labelPlayerName, players) {
+    constructor(buttons, players) {
         this._players = players;
         this._currentPlayer = this._players[0];
-        this._labelPlayerName = labelPlayerName;
         this._gameField = [];
 
         for (let i = 0, j = 0; j < buttons.length; i++, j += this._countColumn) {
             this._gameField[i] = buttons.slice(j, j + this._countColumn);
         }
-
-        this.updateLabelPlayerName(this._currentPlayer);
     }
 
+    setOnUpdateUi(callback) {
+        this._OnUpdateUi = callback;
+        this._OnUpdateUi();
+    }
+
+    setOnWin(callback) {
+        this._onWin = callback;
+    }
+
+    setOnReset(callback) {
+        this._onReset = callback;
+    }
 
     getField() {
         let field = new Array(this._countRow);
@@ -49,12 +58,21 @@ class Game_manager {
         this._currentPlayer = this._players[idx];
     }
 
-    getIsBlockGame() {
-        return this._blockGame;
+    getStateSave() {
+        const stateField = this.getField();
+        const indexCurrentPlayer = this.getIndexCurrentPlayer();
+
+        return {
+            "stateField": stateField,
+            "indexCurrentPlayer": indexCurrentPlayer,
+        };
     }
 
-    setIsBlockGame(value) {
-        this._blockGame = value;
+    setStateSave(saveObj) {
+        this.setField(saveObj.stateField);
+        this.setCurrentPlayer(saveObj.indexCurrentPlayer);
+        this.checkWin();
+        this._OnUpdateUi();
     }
 
     getWinElementsHorizontal(player) {
@@ -141,36 +159,21 @@ class Game_manager {
             || this.getWinElementsSideDiagonal(player);
     }
 
-    updateLabelPlayerName(player) {
-        this._labelPlayerName.textContent = player.getName();
-    }
-
     changeCurrentPlayer() {
         this._currentPlayer = this._currentPlayer === this._players[0] ? this._players[1] : this._players[0];
     }
 
-    addStyleWinElements(winElements) {
-        winElements.forEach(winCell => winCell.classList.add("tic_tac-toe__сell_win"));
-    }
-
-    removeStyleWinElements() {
-        for (let i = 0; i < this._countRow; i++) {
-            for (let j = 0; j < this._countColumn; j++) {
-                this._gameField[i][j].classList.remove("tic_tac-toe__сell_win");
-            }
-        }
-    }
-
     checkWin() {
+        let isWin = false;
         const winElements = this.getWinElements(this._currentPlayer);
 
-        if (winElements) {
+        if (winElements != null) {
             this._blockGame = true;
-            this.addStyleWinElements(winElements);
-        } else {
-            this.changeCurrentPlayer();
-            this.updateLabelPlayerName(this._currentPlayer);
+            this._onWin(winElements);
+            isWin = true;
         }
+
+        return isWin;
     }
 
     clearField() {
@@ -181,9 +184,9 @@ class Game_manager {
         }
 
         this._currentPlayer = this._players[0];
-        this.updateLabelPlayerName(this._currentPlayer);
-        this.removeStyleWinElements();
+        this._onReset(this._gameField, this._countRow, this._countColumn);
         this._blockGame = false;
+        this._OnUpdateUi();
     }
 
     gameStep(pressedEvent) {
@@ -191,7 +194,10 @@ class Game_manager {
 
         if (pressedButton.textContent === "" && !this._blockGame) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
-            this.checkWin();
+            if (!this.checkWin()) {
+                this.changeCurrentPlayer();
+                this._OnUpdateUi();
+            }
         }
     }
 }

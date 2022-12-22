@@ -4,21 +4,12 @@ class Game_saver {
     }
 
     static saveGame(keySave, gameManager) {
-        const stateGame = gameManager.getField();
-        const indexCurrentPlayer = gameManager.getIndexCurrentPlayer();
-        const saveObj = {
-            "stateGame": stateGame,
-            "indexCurrentPlayer": indexCurrentPlayer,
-        };
+        const saveObj = gameManager.getStateSave();
         localStorage.setItem(keySave, JSON.stringify(saveObj));
     }
 
-    static loadGame(keySave, gameManager, onLoadGame) {
+    static loadGame(keySave, gameManager) {
         const saveObj = JSON.parse(localStorage.getItem(keySave));
-        const stateGame = saveObj.stateGame;
-        const indexCurrentPlayer = saveObj.indexCurrentPlayer;
-        gameManager.setField(stateGame);
-        gameManager.setCurrentPlayer(indexCurrentPlayer);
-        onLoadGame();
+        gameManager.setStateSave(saveObj);
     }
 }
