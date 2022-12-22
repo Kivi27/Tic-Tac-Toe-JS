@@ -7,11 +7,21 @@ class Ui_manager {
         this._labelPlayerName.textContent = player.getName();
     }
 
-    addStyle(allCells, nameStyle) {
+    addStyleCells(allCells, nameStyle) {
         allCells.forEach(cell => cell.classList.add(nameStyle));
     }
 
-    removeStyle(Field, nameStyle) {
+    removeStyleCells(allCells, nameStyle) {
+        allCells.forEach(cell => cell.classList.remove(nameStyle));
+    }
+
+    addStyleField(Field, nameStyle) {
+        Field.forEach(row => {
+            row.forEach(cell => cell.classList.add(nameStyle));
+        });
+    }
+
+    removeStyleField(Field, nameStyle) {
         Field.forEach(row => {
             row.forEach(cell => cell.classList.remove(nameStyle));
         });

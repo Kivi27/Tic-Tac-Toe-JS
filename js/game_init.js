@@ -1,5 +1,6 @@
 const saveKey = "game_manager";
 const nameWinStyle = "tic-tac-toe__сell_win";
+const nameDrawStyle = "tic-tac-toe__cell_draw";
 
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
@@ -16,15 +17,15 @@ gameManager.setOnUpdateUi(() => {
 });
 
 gameManager.setOnWin(winCells => {
-    uiManager.addStyle(winCells, nameWinStyle);
+    uiManager.addStyleCells(winCells, nameWinStyle);
 });
 
 gameManager.setOnReset(allCells => {
-    uiManager.removeStyle(allCells, nameWinStyle);
+    uiManager.removeStyleField(allCells, nameWinStyle);
 });
 
 gameManager.setOnDraw(allCells => {
-    uiManager.addStyle(allCells, "tic-tac-toe__cell_draw");
+    uiManager.addStyleField(allCells, nameDrawStyle);
 });
 
 if (localStorage.getItem(saveKey)) {
