@@ -8,6 +8,7 @@ class Tic_tac_toe_controller {
         this._players = players;
         this._currentPlayer = this._players[0];
         this._gameField = [];
+        this._winCells = [];
 
         this.createField(cells);
     }
@@ -128,93 +129,103 @@ class Tic_tac_toe_controller {
         this._OnUpdateUi();
     }
 
-    getWinElementsHorizontal(player) {
-        let winButton = [];
+    checkCell(cell, playerSymbol) {
+        if (cell.textContent === playerSymbol) {
+            this._winCells.push(cell);
+        } else {
+            this._winCells = [];
+        }
+    }
 
-        for (let i = 0; i < this._countRow; i++) {
-            winButton = [];
-            let countScore = 0;
-            const playerSymbol = player.getGameSymbol();
+    getWinCell() {
+        return this._winCells.length === this._limitWin ? this._winCells : null;
+    }
 
+    collectWinElementsHorizontal(player) {
+        const playerSymbol = player.getGameSymbol();
+
+        rowLoop: for (let i = 0; i < this._countRow; i++) {
+            this._winCells = [];
             for (let j = 0; j < this._countColumn; j++) {
-                if (this._gameField[i][j].textContent === playerSymbol) {
-                    winButton.push(this._gameField[i][j]);
-                    countScore++;
+                this.checkCell(this._gameField[i][j], playerSymbol);
+
+                if (this._winCells.length === this._limitWin) {
+                    break rowLoop;
                 }
             }
-
-            if (countScore === this._countColumn) {
-                break;
-            }
         }
-        return winButton.length === this._countColumn ? winButton : null;
+
+        return this.getWinCell();
     }
 
-    getWinElementsVertical(player) {
-        let winButton = [];
+    collectWinElementsVertical(player) {
+        const playerSymbol = player.getGameSymbol();
 
-        for (let j = 0; j < this._countColumn; j++) {
-            winButton = [];
-            let countScore = 0;
-            const playerSymbol = player.getGameSymbol();
-
+        columnLoop: for (let j = 0; j < this._countColumn; j++) {
+            this._winCells = [];
             for (let i = 0; i < this._countRow; i++) {
-                if (this._gameField[i][j].textContent === playerSymbol) {
-                    winButton.push(this._gameField[i][j]);
-                    countScore++;
+                this.checkCell(this._gameField[i][j], playerSymbol);
+
+                if (this._winCells.length === this._limitWin) {
+                    break columnLoop;
                 }
             }
-
-            if (countScore === this._countRow) {
-                return winButton;
-            }
         }
 
-        return winButton.length === this._countColumn ? winButton : null;
+        return this.getWinCell();
     }
 
-    getWinElementsMainDiagonal(player) {
-        const winButton = [];
+
+    collectWinElementUpperMainDiagonal(player) {
         const playerSymbol = player.getGameSymbol();
-        let countScore = 0;
 
-        for (let i = 0; i < this._countRow; i++) {
-            if (this._gameField[i][i].textContent === playerSymbol) {
-                winButton.push(this._gameField[i][i]);
-                countScore++;
+        diagonalLoop: for (let numberDiagonal = 0; numberDiagonal < this._countColumn; numberDiagonal++) {
+            let rowIndex = 0;
+            this._winCells = [];
+
+            for (let columnIndex = numberDiagonal; columnIndex >= 0; columnIndex--) {
+                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+
+                if (this._winCells.length === this._limitWin) {
+                    break diagonalLoop;
+                }
+                rowIndex++;
             }
         }
 
-        return countScore === this._countRow ? winButton : null;
+        return this.getWinCell();
     }
 
-    getWinElementsSideDiagonal(player) {
-        const winButton = [];
+    collectWinElementDownMainDiagonal(player) {
         const playerSymbol = player.getGameSymbol();
-        let countScore = 0;
 
-        for (let i = 0; i < this._countRow; i++) {
-            const columnIndex = this._countColumn - i - 1;
+        diagonalLoop: for (let numberDiagonal = 1; numberDiagonal < this._countRow; numberDiagonal++) {
+            let rowIndex = numberDiagonal;
+            this._winCells = [];
 
-            if (this._gameField[i][columnIndex].textContent === playerSymbol) {
-                winButton.push(this._gameField[i][columnIndex]);
-                countScore++;
+            for (let columnIndex = this._countColumn - 1; columnIndex > numberDiagonal - 1; columnIndex--) {
+                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+
+                if (this._winCells.length === this._limitWin) {
+                    break diagonalLoop;
+                }
+                rowIndex++;
             }
         }
 
-        return countScore === this._countRow ? winButton : null;
+        return this.getWinCell();
     }
 
-    getWinElements(player) {
-        return this.getWinElementsHorizontal(player)
-            || this.getWinElementsVertical(player)
-            || this.getWinElementsMainDiagonal(player)
-            || this.getWinElementsSideDiagonal(player);
+    collectWinElements(player) {
+        return this.collectWinElementsHorizontal(player)
+            || this.collectWinElementsVertical(player)
+            || this.collectWinElementUpperMainDiagonal(player)
+            || this.collectWinElementDownMainDiagonal(player)
     }
 
     checkWin() {
         let isWin = false;
-        const winElements = this.getWinElements(this._currentPlayer);
+        const winElements = this.collectWinElements(this._currentPlayer);
 
         if (winElements != null) {
             this._blockGame = true;
