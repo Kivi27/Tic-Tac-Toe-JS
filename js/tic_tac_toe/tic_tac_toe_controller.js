@@ -1,15 +1,15 @@
-class Game_manager {
+class Tic_tac_toe_controller {
     _countRow = 3;
     _countColumn = 3;
     _blockGame = false;
 
-    constructor(buttons, players) {
+    constructor(cells, players) {
         this._players = players;
         this._currentPlayer = this._players[0];
         this._gameField = [];
 
-        for (let i = 0, j = 0; j < buttons.length; i++, j += this._countColumn) {
-            this._gameField[i] = buttons.slice(j, j + this._countColumn);
+        for (let i = 0, j = 0; j < cells.length; i++, j += this._countColumn) {
+            this._gameField[i] = cells.slice(j, j + this._countColumn);
         }
     }
 
@@ -32,6 +32,7 @@ class Game_manager {
 
     getField() {
         let field = new Array(this._countRow);
+
         for (let i = 0; i < this._countRow; i++) {
             field[i] = new Array(this._countColumn);
 
@@ -50,6 +51,23 @@ class Game_manager {
         }
     }
 
+    isFieldFill() {
+        let isFill = true;
+
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                const currentValue = this._gameField[i][j].textContent;
+
+                if (currentValue === "") {
+                    isFill = false;
+                    break;
+                }
+            }
+        }
+
+        return isFill;
+    }
+
     getIndexCurrentPlayer() {
         return this._players.findIndex(player => player === this._currentPlayer);
     }
@@ -62,6 +80,12 @@ class Game_manager {
         this._currentPlayer = this._players[idx];
     }
 
+    changeCurrentPlayer() {
+        this._currentPlayer = this._currentPlayer === this._players[0]
+            ? this._players[1]
+            : this._players[0];
+    }
+
     getStateSave() {
         const stateField = this.getField();
         const indexCurrentPlayer = this.getIndexCurrentPlayer();
@@ -72,9 +96,9 @@ class Game_manager {
         };
     }
 
-    setStateSave(saveObj) {
-        this.setField(saveObj.stateField);
-        this.setCurrentPlayer(saveObj.indexCurrentPlayer);
+    setStateSave(saveState) {
+        this.setField(saveState.stateField);
+        this.setCurrentPlayer(saveState.indexCurrentPlayer);
         this.checkWin();
         this._OnUpdateUi();
     }
@@ -100,23 +124,6 @@ class Game_manager {
         }
         return winButton.length === this._countColumn ? winButton : null;
     }
-
-    isFieldFill() {
-        let isFill = true;
-
-        for (let i = 0; i < this._countRow; i++) {
-            for (let j = 0; j < this._countColumn; j++) {
-                const currentValue = this._gameField[i][j].textContent;
-                if (currentValue === "") {
-                    isFill = false;
-                    break;
-                }
-            }
-        }
-
-        return isFill;
-    }
-
 
     getWinElementsVertical(player) {
         let winButton = [];
@@ -180,10 +187,6 @@ class Game_manager {
             || this.getWinElementsSideDiagonal(player);
     }
 
-    changeCurrentPlayer() {
-        this._currentPlayer = this._currentPlayer === this._players[0] ? this._players[1] : this._players[0];
-    }
-
     checkWin() {
         let isWin = false;
         const winElements = this.getWinElements(this._currentPlayer);
@@ -212,9 +215,12 @@ class Game_manager {
 
     gameStep(pressedEvent) {
         const pressedButton = pressedEvent.target;
+        const isGameLock = !this._blockGame;
+        const isCellEmpty = pressedButton.textContent === "";
 
-        if (pressedButton.textContent === "" && !this._blockGame) {
+        if (isCellEmpty && isGameLock) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
+
             if (!this.checkWin()) {
                 this.changeCurrentPlayer();
                 this._OnUpdateUi();

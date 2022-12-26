@@ -1,6 +1,13 @@
-class Ui_manager {
-    constructor(labelPlayerName) {
+class Ui_controller {
+    _drawLabel = "Draw !!!";
+
+    constructor(labelPlayerName, labelInfoGame) {
+        this._labelInfoGame = labelInfoGame;
         this._labelPlayerName = labelPlayerName;
+    }
+
+    updateLabelDraw() {
+        this._labelInfoGame.textContent = this._drawLabel;
     }
 
     updateLabelPlayerName(player) {
