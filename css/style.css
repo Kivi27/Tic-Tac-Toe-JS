@@ -4,26 +4,18 @@
     --cell-border-color: #0DA192;
     --cell-border-width: 10px;
     --primary-color: #FFFFFF;
+    --ui-background-color: #0f7d71;
     --win-color: #FAE20A;
+    --draw-color: #DE0DB8;
     --hover-reset-button-color: #FAE20A;
 }
 
-html, body {
-    height: 100%;
-}
-
-.center-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
 
 .container {
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     max-width: 1920px;
-    height: 100%;
     margin: 0 auto;
     font-family: 'Comic Sans MS', serif;
     font-weight: 700;
@@ -37,14 +29,42 @@ html, body {
     text-transform: uppercase;
 }
 
-.tic-tac-toe {
+.tic-tac-toe-game {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0 60px;
+}
+
+.tic-tac-toe-field {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tic-tac-toe-game__common-style {
+    padding: 20px;
+    font-size: 1.5rem;
+    font-family: "Comic Sans MS", serif;
+    font-weight: 700;
+    text-align: center;
+    color: var(--primary-color);
+    background-color: var(--ui-background-color);
+}
+
+.tic-tac-toe-grid {
     display: grid;
     grid-template: 100px 100px 100px / 100px 100px 100px;
 }
 
+.tic_tac-toe__сell {
+    border: var(--cell-border-width) solid var(--cell-border-color);
+}
+
+
 .tic-tac-toe__button {
-    width: 100px;
-    height: 100px;
+    width: 80px;
+    height: 80px;
     font-weight: 800;
     font-size: 3rem;
     background: none;
@@ -72,45 +92,76 @@ html, body {
     border-top: var(--cell-border-width) solid var(--cell-border-color);
 }
 
-.tic_tac-toe__сell_win {
+.tic-tac-toe__сell_win {
     color: var(--win-color);
 }
 
-.tic-tac-toe-hud {
+.tic-tac-toe__cell_draw {
+    color: var(--draw-color);
+}
+
+.tic-tac-toe-setting {
     display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: space-between;
     gap: 20px;
 }
 
-.tic-tac-toe-hud__common-style {
-    padding: 20px;
-    font-size: 1.5rem;
-    font-family: "Comic Sans MS", serif;
-    font-weight: 700;
+.tic-tac-toe-setting__common-button {
+    border: none;
+    border-radius: 10px;
+    background-color: var(--brand-primary-darken-color);
+}
+
+.tic-tac-toe-setting__common-button:hover {
+    cursor: pointer;
+    color: var(--hover-reset-button-color);
+}
+
+.tic-tac-toe-setting__reset-button {
+    width: 100%;
+    text-transform: uppercase;
+}
+
+.tic-tac-toe-resize-ui {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    padding: 40px;
+    font-size: 2rem;
+    border-radius: 25px;
+    background-color: var(--ui-background-color);
+}
+
+.tic-tac-toe-resize-ui__input-size {
+    width: 100%;
+    display: flex;
+    gap: 20px;
+}
+
+.tic-tac-toe-resize-ui__input {
+    width: 70px;
+    border: none;
+    padding: 0;
+    font-size: 2rem;
+    text-align: center;
+}
+
+.tic-tac-toe-resize-ui__button {
+    padding: 10px;
+    font-size: 2rem;
+    font-weight: 600;
     color: var(--primary-color);
     background-color: var(--brand-primary-darken-color);
 }
 
-.tic-tac-toe-hud__player-info {
-    text-align: center;
-    border-radius: 10px;
+.tic-tac-toe-resize-ui__button-change-size {
+    width: 35%;
 }
 
-.tic-tac-toe-game__tic-tac-toe-hud {
-    margin-top: 60px;
-}
-
-.tic-tac-toe-hud__reset-button {
+.tic-tac-toe-resize-ui__button-apply-change {
     width: 100%;
-    border: none;
-    border-radius: 10px;
-    text-transform: uppercase;
-}
-
-.tic-tac-toe-hud__reset-button:hover {
-    cursor: pointer;
-    color: var(--hover-reset-button-color);
 }
 
 .footer {
