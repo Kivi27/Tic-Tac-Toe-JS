@@ -175,6 +175,10 @@ class Tic_tac_toe_controller {
         return this.getWinCell();
     }
 
+    collectWinMainDiagonal(player) {
+        return this.collectWinElementUpperMainDiagonal(player)
+            || this.collectWinElementDownMainDiagonal(player);
+    }
 
     collectWinElementUpperMainDiagonal(player) {
         const playerSymbol = player.getGameSymbol();
@@ -216,11 +220,54 @@ class Tic_tac_toe_controller {
         return this.getWinCell();
     }
 
+    collectWinSlayerDiagonal(player) {
+        return this.collectWinSlayerUpperDiagonal(player)
+            || this.collectWinSlayerDownDiagonal(player);
+    }
+
+    collectWinSlayerUpperDiagonal(player) {
+        const playerSymbol = player.getGameSymbol();
+
+        diagonalLoop: for (let numberDiagonal = this._countColumn - 1; numberDiagonal >= 0; numberDiagonal--) {
+            let columnIndex = numberDiagonal;
+            this._winCells = [];
+            for (let rowIndex = 0; columnIndex < this._countColumn; rowIndex++) {
+                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+
+                if (this._winCells.length === this._limitWin) {
+                    break diagonalLoop;
+                }
+                columnIndex++;
+            }
+        }
+
+        return this.getWinCell();
+    }
+
+    collectWinSlayerDownDiagonal(player) {
+        const playerSymbol = player.getGameSymbol();
+
+        diagonalLoop: for (let numberDiagonal = 1; numberDiagonal < this._countRow; numberDiagonal++) {
+            let rowIndex = numberDiagonal;
+            this._winCells = [];
+            for (let columnIndex = 0; columnIndex < this._countRow - numberDiagonal; columnIndex++) {
+                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+
+                if (this._winCells.length === this._limitWin) {
+                    break diagonalLoop;
+                }
+                rowIndex++;
+            }
+        }
+
+        return this.getWinCell();
+    }
+
     collectWinElements(player) {
         return this.collectWinElementsHorizontal(player)
             || this.collectWinElementsVertical(player)
-            || this.collectWinElementUpperMainDiagonal(player)
-            || this.collectWinElementDownMainDiagonal(player)
+            || this.collectWinMainDiagonal(player)
+            || this.collectWinSlayerDiagonal(player)
     }
 
     checkWin() {
