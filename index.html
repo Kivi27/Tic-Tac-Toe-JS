@@ -10,6 +10,7 @@
     <script src="js/tic_tac_toe/tic_tac_toe_controller.js"></script>
     <script src="js/saver.js"></script>
     <script src="js/ui/ui_controller.js"></script>
+    <script src="js/ui/tic_tac_toe_view.js"></script>
 </head>
 <body>
     <div class="container">
@@ -20,33 +21,7 @@
             <div class="tic-tac-toe-game">
                 <section class="tic-tac-toe-field">
                     <div class="tic-tac-toe-grid">
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_bottom-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_bottom-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
-                        <div class="tic_tac-toe__сell">
-                            <button class="tic-tac-toe__button"></button>
-                        </div>
+
                     </div>
                     <div class="tic-tac-toe-game__common-style">
                         Player's turn: <span class="tic-tac-toe-game__player-name"></span>
@@ -54,16 +29,19 @@
                 </section>
                 <section class="tic-tac-toe-setting">
                     <div class="tic-tac-toe-resize-ui"> <!--TODO Answer the mentor -->
-                        <div>Enter the field size</div>
+                        <div>Enter the count column</div>
                         <div class="tic-tac-toe-resize-ui__input-size">
-                            <button class="tic-tac-toe-resize-ui__button tic-tac-toe-setting__common-button">+10</button>
-                            <input class="tic-tac-toe-resize-ui__input" placeholder=" ">
-                            <button class="tic-tac-toe-resize-ui__button tic-tac-toe-setting__common-button">-10</button>
+                            <button class="tic-tac-toe-resize-ui__up-size  tic-tac-toe-resize-ui__button-change-size tic-tac-toe-resize-ui__button
+                                tic-tac-toe-setting__common-button">+1</button>
+                            <input class="tic-tac-toe-resize-ui__input" placeholder="1" value="3">
+                            <button class="tic-tac-toe-resize-ui__down-size tic-tac-toe-resize-ui__button-change-size tic-tac-toe-resize-ui__button
+                                tic-tac-toe-setting__common-button">-1</button>
                         </div>
-                        <button class="tic-tac-toe-resize-ui__button tic-tac-toe-setting__common-button">Apply</button>
+                        <button class="tic-tac-toe-resize-ui__button-apply-change tic-tac-toe-resize-ui__button
+                            tic-tac-toe-setting__common-button">Apply</button>
                     </div>
                     <button class="tic-tac-toe-setting__reset-button tic-tac-toe-game__common-style
-                        tic-tac-toe-setting__common-button">reset</button>
+                        tic-tac-toe-setting__common-button">reset game</button>
                 </section>
             </div>
         </main>
@@ -76,6 +54,7 @@
             </p>
         </footer>
     </div>
+    <script src="js/tic_tac_toe/number_controlled_input.js"></script>
     <script src="js/tic_tac_toe_init.js"></script>
 </body>
 </html>

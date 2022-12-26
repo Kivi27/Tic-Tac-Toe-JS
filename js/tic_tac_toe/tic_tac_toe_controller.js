@@ -1,15 +1,78 @@
 class Tic_tac_toe_controller {
-    _countRow = 3;
-    _countColumn = 3;
+    _limitWin = 3;
     _blockGame = false;
 
-    constructor(cells, players) {
+    constructor(cells, countRow, countColumn, players) {
+        this._countRow = countRow;
+        this._countColumn = countColumn;
         this._players = players;
         this._currentPlayer = this._players[0];
         this._gameField = [];
 
+        this.createField(cells);
+    }
+
+    createField(cells) {
         for (let i = 0, j = 0; j < cells.length; i++, j += this._countColumn) {
             this._gameField[i] = cells.slice(j, j + this._countColumn);
+        }
+    }
+
+    dynamicChangeField(cells, newCountRow, newCountColumn) {
+        this._countRow = newCountRow;
+        this._countColumn = newCountColumn;
+        this._gameField = [];
+        this.createField(cells);
+    }
+
+    isFieldFill() {
+        let isFill = true;
+
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                const currentValue = this._gameField[i][j].textContent;
+
+                if (currentValue === "") {
+                    isFill = false;
+                    break;
+                }
+            }
+        }
+
+        return isFill;
+    }
+
+    clearField() {
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                this._gameField[i][j].textContent = "";
+            }
+        }
+
+        this._currentPlayer = this._players[0];
+        this._onReset(this._gameField);
+        this._blockGame = false;
+        this._OnUpdateUi();
+    }
+
+    getImageField() {
+        let field = new Array(this._countRow);
+
+        for (let i = 0; i < this._countRow; i++) {
+            field[i] = new Array(this._countColumn);
+
+            for (let j = 0; j < this._countColumn; j++) {
+                field[i][j] = this._gameField[i][j].textContent;
+            }
+        }
+        return field;
+    }
+
+    setImageField(newField) {
+        for (let i = 0; i < this._countRow; i++) {
+            for (let j = 0; j < this._countColumn; j++) {
+                this._gameField[i][j].textContent = newField[i][j];
+            }
         }
     }
 
@@ -28,44 +91,6 @@ class Tic_tac_toe_controller {
 
     setOnDraw(callback) {
         this._onDraw = callback;
-    }
-
-    getField() {
-        let field = new Array(this._countRow);
-
-        for (let i = 0; i < this._countRow; i++) {
-            field[i] = new Array(this._countColumn);
-
-            for (let j = 0; j < this._countColumn; j++) {
-                field[i][j] = this._gameField[i][j].textContent;
-            }
-        }
-        return field;
-    }
-
-    setField(newField) {
-        for (let i = 0; i < this._countRow; i++) {
-            for (let j = 0; j < this._countColumn; j++) {
-                this._gameField[i][j].textContent = newField[i][j];
-            }
-        }
-    }
-
-    isFieldFill() {
-        let isFill = true;
-
-        for (let i = 0; i < this._countRow; i++) {
-            for (let j = 0; j < this._countColumn; j++) {
-                const currentValue = this._gameField[i][j].textContent;
-
-                if (currentValue === "") {
-                    isFill = false;
-                    break;
-                }
-            }
-        }
-
-        return isFill;
     }
 
     getIndexCurrentPlayer() {
@@ -87,7 +112,7 @@ class Tic_tac_toe_controller {
     }
 
     getStateSave() {
-        const stateField = this.getField();
+        const stateField = this.getImageField();
         const indexCurrentPlayer = this.getIndexCurrentPlayer();
 
         return {
@@ -97,7 +122,7 @@ class Tic_tac_toe_controller {
     }
 
     setStateSave(saveState) {
-        this.setField(saveState.stateField);
+        this.setImageField(saveState.stateField);
         this.setCurrentPlayer(saveState.indexCurrentPlayer);
         this.checkWin();
         this._OnUpdateUi();
@@ -198,19 +223,6 @@ class Tic_tac_toe_controller {
         }
 
         return isWin;
-    }
-
-    clearField() {
-        for (let i = 0; i < this._countRow; i++) {
-            for (let j = 0; j < this._countColumn; j++) {
-                this._gameField[i][j].textContent = "";
-            }
-        }
-
-        this._currentPlayer = this._players[0];
-        this._onReset(this._gameField);
-        this._blockGame = false;
-        this._OnUpdateUi();
     }
 
     gameStep(pressedEvent) {

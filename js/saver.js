@@ -3,12 +3,12 @@ class Saver {
 
     }
 
-    static saveGame(keySave, saveObj) {
+    static saveObj(keySave, saveObj) {
         const saveState = saveObj.getStateSave();
         localStorage.setItem(keySave, JSON.stringify(saveState));
     }
 
-    static loadGame(keySave, saveObj) {
+    static loadObj(keySave, saveObj) {
         const saveState = JSON.parse(localStorage.getItem(keySave));
         saveObj.setStateSave(saveState);
     }
