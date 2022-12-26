@@ -2,16 +2,23 @@ const saveKey = "state_game";
 const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";
 
-const player1 = new Player("Player 1", "X");
-const player2 = new Player("Player 2", "O");
-
 const cellsTicTacToe = Array.from(document.querySelectorAll(".tic-tac-toe__button"));
 const resetButton = document.querySelector(".tic-tac-toe-hud__reset-button");
 const labelPlayerName = document.querySelector(".tic-tac-toe__player-name");
 const labelPlayerInfo = document.querySelector(".tic-tac-toe-hud__player-info");
 
-const uiController = new Ui_controller(labelPlayerName, labelPlayerInfo);
+const player1 = new Player("Player 1", "X");
+const player2 = new Player("Player 2", "O");
 const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe,[player1, player2]);
+const uiController = new Ui_controller(labelPlayerName, labelPlayerInfo);
+
+function tryRestoreTicTacToeState() {
+    if (localStorage.getItem(saveKey)) {
+        Saver.loadGame(saveKey, ticTacToeController);
+    }
+}
+
+window.onstorage = () => tryRestoreTicTacToeState();
 
 ticTacToeController.setOnUpdateUi(() => {
     const currentPlayer = ticTacToeController.getCurrentPlayer();
@@ -24,15 +31,14 @@ ticTacToeController.setOnWin(winCells => {
 
 ticTacToeController.setOnReset(allCells => {
     uiController.removeStyleField(allCells, nameWinStyle);
+    uiController.removeStyleField(allCells, nameDrawStyle);
 });
 
 ticTacToeController.setOnDraw(allCells => {
     uiController.addStyleField(allCells, nameDrawStyle);
 });
 
-if (localStorage.getItem(saveKey)) {
-    Saver.loadGame(saveKey, ticTacToeController);
-}
+tryRestoreTicTacToeState();
 
 for (let cellTicTacToe of cellsTicTacToe) {
     cellTicTacToe.addEventListener("click", (pressedButton) => {
@@ -41,7 +47,7 @@ for (let cellTicTacToe of cellsTicTacToe) {
     });
 }
 
-resetButton.addEventListener("click", (event) => {
+resetButton.addEventListener("click", () => {
     ticTacToeController.clearField();
     Saver.saveGame(saveKey, ticTacToeController);
 });
