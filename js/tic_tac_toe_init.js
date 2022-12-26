@@ -3,8 +3,8 @@ const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";
 
 const cellsTicTacToe = Array.from(document.querySelectorAll(".tic-tac-toe__button"));
-const resetButton = document.querySelector(".tic-tac-toe-hud__reset-button");
-const labelPlayerName = document.querySelector(".tic-tac-toe__player-name");
+const resetButton = document.querySelector(".tic-tac-toe-setting__reset-button");
+const labelPlayerName = document.querySelector(".tic-tac-toe-game__player-name");
 const labelPlayerInfo = document.querySelector(".tic-tac-toe-hud__player-info");
 
 const player1 = new Player("Player 1", "X");

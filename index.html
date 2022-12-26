@@ -17,9 +17,9 @@
             <h1 class="header__title">tic-tac-toe game</h1>
         </header>
         <main class="main">
-            <section class="center-container">
-                <div class="tic-tac-toe-game">
-                    <div class="tic-tac-toe">
+            <div class="tic-tac-toe-game">
+                <section class="tic-tac-toe-field">
+                    <div class="tic-tac-toe-grid">
                         <div class="tic_tac-toe__сell tic-tac-toe__cell_right-border tic-tac-toe__cell_bottom-border">
                             <button class="tic-tac-toe__button"></button>
                         </div>
@@ -48,14 +48,24 @@
                             <button class="tic-tac-toe__button"></button>
                         </div>
                     </div>
-                    <div class="tic-tac-toe-hud tic-tac-toe-game__tic-tac-toe-hud">
-                        <div class="tic-tac-toe-hud__player-info tic-tac-toe-hud__common-style">
-                            Player's turn: <span class="tic-tac-toe__player-name"></span>
-                        </div>
-                        <button class="tic-tac-toe-hud__reset-button tic-tac-toe-hud__common-style">reset</button>
+                    <div class="tic-tac-toe-game__common-style">
+                        Player's turn: <span class="tic-tac-toe-game__player-name"></span>
                     </div>
-                </div>
-            </section>
+                </section>
+                <section class="tic-tac-toe-setting">
+                    <div class="tic-tac-toe-resize-ui"> <!--TODO Answer the mentor -->
+                        <div>Enter the field size</div>
+                        <div class="tic-tac-toe-resize-ui__input-size">
+                            <button class="tic-tac-toe-resize-ui__button tic-tac-toe-setting__common-button">+10</button>
+                            <input class="tic-tac-toe-resize-ui__input" placeholder=" ">
+                            <button class="tic-tac-toe-resize-ui__button tic-tac-toe-setting__common-button">-10</button>
+                        </div>
+                        <button class="tic-tac-toe-resize-ui__button tic-tac-toe-setting__common-button">Apply</button>
+                    </div>
+                    <button class="tic-tac-toe-setting__reset-button tic-tac-toe-game__common-style
+                        tic-tac-toe-setting__common-button">reset</button>
+                </section>
+            </div>
         </main>
         <footer class="footer">
             <p class="footer__author">
