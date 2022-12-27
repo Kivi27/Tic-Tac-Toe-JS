@@ -3,7 +3,7 @@ const saveKeyOldCountColumn = "sizeField";
 const defaultSizeTicTacToeField = 3;
 
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-ui__input");
-const resizeController = new Number_controlled_input(inputCountColumnGrid);
+const resizeController = new NumberControlledInput(inputCountColumnGrid);
 const buttonUpSize = document.querySelector(".tic-tac-toe-resize-ui__up-size");
 
 buttonUpSize.addEventListener("click", function () {
@@ -60,15 +60,15 @@ const resetButton = document.querySelector(".tic-tac-toe-setting__reset-button")
 const labelPlayerName = document.querySelector(".tic-tac-toe-game__player-name");
 const countColumnAndRow = resizeController.getValueControlledInput();
 
-const gridController = new Grid_controller(gridTicTacToe, countColumnAndRow, countColumnAndRow);
+const gridController = new GridController(gridTicTacToe, countColumnAndRow, countColumnAndRow);
 const cellsTicTacToe = gridController.getCells();
 
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
 initTicTacToeCells(cellsTicTacToe);
-const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe, countColumnAndRow,
+const ticTacToeController = new TicTacToeController(cellsTicTacToe, countColumnAndRow,
     countColumnAndRow, [player1, player2]);
-const uiController = new Ui_controller(labelPlayerName);
+const uiController = new UiController(labelPlayerName);
 
 const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";

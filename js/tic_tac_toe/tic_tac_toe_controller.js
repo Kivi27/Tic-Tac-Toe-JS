@@ -1,4 +1,4 @@
-class Tic_tac_toe_controller {
+class TicTacToeController {
     _limitWin = 3;
     _blockGame = false;
 
@@ -274,7 +274,7 @@ class Tic_tac_toe_controller {
     checkWin() {
         let isWin = false;
         const winElements = this.collectWinElements(this._currentPlayer);
-        //TODO refactoring
+        // TODO: refactoring
 
         if (winElements != null) {
             this._blockGame = true;

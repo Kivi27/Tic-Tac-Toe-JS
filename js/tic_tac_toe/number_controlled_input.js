@@ -1,4 +1,4 @@
-class Number_controlled_input {
+class NumberControlledInput {
 
     _lowerLimit = 3;
     _upperLimit = 10;
