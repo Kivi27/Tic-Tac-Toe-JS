@@ -67,7 +67,8 @@ const cellsTicTacToe = gridController.getCells();
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
 initTicTacToeCells(cellsTicTacToe);
-const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe, countColumnAndRow, countColumnAndRow, [player1, player2]);
+const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe, countColumnAndRow,
+    countColumnAndRow, [player1, player2]);
 const uiController = new Ui_controller(labelPlayerName, labelPlayerInfo);
 
 const nameWinStyle = "tic-tac-toe__сell_win";
