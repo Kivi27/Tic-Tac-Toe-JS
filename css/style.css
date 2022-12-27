@@ -8,6 +8,11 @@
     --win-color: #FAE20A;
     --draw-color: #DE0DB8;
     --hover-reset-button-color: #FAE20A;
+    --analytic-title-color: #00FF73;
+}
+
+.body {
+    height: 100vh;
 }
 
 .container {
@@ -15,6 +20,7 @@
     flex-direction: column;
     justify-content: space-between;
     max-width: 1920px;
+    height: 100vh;
     margin: 0 auto;
     font-family: 'Comic Sans MS', serif;
     font-weight: 700;
@@ -31,7 +37,7 @@
 .tic-tac-toe-game {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: flex-start;
     gap: 0 60px;
 }
 
@@ -122,7 +128,7 @@
     text-transform: uppercase;
 }
 
-.tic-tac-toe-resize-ui {
+.tic-tac-toe-setting__common-block {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -161,6 +167,21 @@
 
 .tic-tac-toe-resize-ui__button-apply-change {
     width: 100%;
+}
+
+.tic-tac-toe-analytic {
+}
+
+.tic-tac-toe-analytic__info-game {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.tic-tac-toe-analytic__title {
+    text-align: center;
+    color: var(--analytic-title-color);
 }
 
 .footer {

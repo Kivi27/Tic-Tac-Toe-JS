@@ -12,7 +12,7 @@
     <script src="js/ui/ui_controller.js"></script>
     <script src="js/ui/grid_controller.js"></script>
 </head>
-<body>
+<body class="body">
     <div class="container">
         <header class="header">
             <h1 class="header__title">tic-tac-toe game</h1>
@@ -21,14 +21,13 @@
             <div class="tic-tac-toe-game">
                 <section class="tic-tac-toe-field">
                     <div class="tic-tac-toe-grid">
-
                     </div>
                     <div class="tic-tac-toe-game__common-style">
                         Player's turn: <span class="tic-tac-toe-game__player-name"></span>
                     </div>
                 </section>
                 <section class="tic-tac-toe-setting">
-                    <div class="tic-tac-toe-resize-ui">
+                    <div class="tic-tac-toe-resize-ui tic-tac-toe-setting__common-block">
                         <div>Enter the count column</div>
                         <div class="tic-tac-toe-resize-ui__input-size">
                             <button class="tic-tac-toe-resize-ui__up-size  tic-tac-toe-resize-ui__button-change-size tic-tac-toe-resize-ui__button
@@ -39,6 +38,18 @@
                         </div>
                         <button class="tic-tac-toe-resize-ui__button-apply-change tic-tac-toe-resize-ui__button
                             tic-tac-toe-setting__common-button">Apply</button>
+                    </div>
+                    <div class="tic-tac-toe-analytic tic-tac-toe-setting__common-block">
+                        <div class="tic-tac-toe-analytic__info-game">
+                            <span class="tic-tac-toe-analytic__title">Analytic for game</span>
+                            <span>Win X: <span class="tic-tac-toe-analytic__game-score-x">0</span></span>
+                            <span>Win O: <span class="tic-tac-toe-analytic__game-score-o">0</span></span>
+                        </div>
+                        <div class="tic-tac-toe-analytic__info-game">
+                            <span class="tic-tac-toe-analytic__title">Analytic for session</span>
+                            <span>Win X: <span class="tic-tac-toe-analytic__session-score-x">0</span></span>
+                            <span>Win O: <span class="tic-tac-toe-analytic__session-score-o">0</span></span>
+                        </div>
                     </div>
                     <button class="tic-tac-toe-setting__reset-button tic-tac-toe-game__common-style
                         tic-tac-toe-setting__common-button">reset game</button>
