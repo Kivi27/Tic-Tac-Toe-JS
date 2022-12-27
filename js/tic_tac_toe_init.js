@@ -48,8 +48,8 @@ function initTicTacToeCells(cellsTicTacToe) {
 }
 
 function changeSizeTicTacToe(countColumn, countRow) {
-    ticTacToeView.changeSizeGrid(countColumn, countRow);
-    const allCells = ticTacToeView.getCells();
+    gridController.changeSizeGrid(countColumn, countRow);
+    const allCells = gridController.getCells();
     ticTacToeController.clearField();
     initTicTacToeCells(allCells);
     ticTacToeController.dynamicChangeField(allCells, countColumn, countRow);
@@ -61,8 +61,8 @@ const labelPlayerName = document.querySelector(".tic-tac-toe-game__player-name")
 const labelPlayerInfo = document.querySelector(".tic-tac-toe-hud__player-info");
 const countColumnAndRow = resizeController.getValueControlledInput();
 
-const ticTacToeView = new Tic_tac_toe_view(gridTicTacToe, countColumnAndRow, countColumnAndRow);
-const cellsTicTacToe = ticTacToeView.getCells();
+const gridController = new Grid_controller(gridTicTacToe, countColumnAndRow, countColumnAndRow);
+const cellsTicTacToe = gridController.getCells();
 
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
