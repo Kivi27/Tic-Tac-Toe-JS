@@ -1,4 +1,4 @@
-class Tic_tac_toe_view {
+class Grid_controller {
     _sizeCell = 100;
     _standardUnitSize = "px";
     constructor(grid, countRow, countColumn) {
