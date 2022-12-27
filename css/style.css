@@ -20,7 +20,6 @@
     flex-direction: column;
     justify-content: space-between;
     max-width: 1920px;
-    height: 100vh;
     margin: 0 auto;
     font-family: 'Comic Sans MS', serif;
     font-weight: 700;
@@ -167,9 +166,6 @@
 
 .tic-tac-toe-resize-ui__button-apply-change {
     width: 100%;
-}
-
-.tic-tac-toe-analytic {
 }
 
 .tic-tac-toe-analytic__info-game {
