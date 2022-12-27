@@ -1,4 +1,5 @@
 class Grid_controller {
+    //TODO dynamic size cell
     _sizeCell = 100;
     _standardUnitSize = "px";
     constructor(grid, countRow, countColumn) {

@@ -58,7 +58,6 @@ function changeSizeTicTacToe(countColumn, countRow) {
 const gridTicTacToe = document.querySelector(".tic-tac-toe-grid");
 const resetButton = document.querySelector(".tic-tac-toe-setting__reset-button");
 const labelPlayerName = document.querySelector(".tic-tac-toe-game__player-name");
-const labelPlayerInfo = document.querySelector(".tic-tac-toe-hud__player-info");
 const countColumnAndRow = resizeController.getValueControlledInput();
 
 const gridController = new Grid_controller(gridTicTacToe, countColumnAndRow, countColumnAndRow);
@@ -67,8 +66,9 @@ const cellsTicTacToe = gridController.getCells();
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
 initTicTacToeCells(cellsTicTacToe);
-const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe, countColumnAndRow, countColumnAndRow, [player1, player2]);
-const uiController = new Ui_controller(labelPlayerName, labelPlayerInfo);
+const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe, countColumnAndRow,
+    countColumnAndRow, [player1, player2]);
+const uiController = new Ui_controller(labelPlayerName);
 
 const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";

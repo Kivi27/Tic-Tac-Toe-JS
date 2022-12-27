@@ -9,7 +9,6 @@ class Tic_tac_toe_controller {
         this._currentPlayer = this._players[0];
         this._gameField = [];
         this._winCells = [];
-
         this.createField(cells);
     }
 
@@ -129,7 +128,7 @@ class Tic_tac_toe_controller {
         this._OnUpdateUi();
     }
 
-    checkCell(cell, playerSymbol) {
+    addWinCellOrClear(cell, playerSymbol) {
         if (cell.textContent === playerSymbol) {
             this._winCells.push(cell);
         } else {
@@ -146,8 +145,9 @@ class Tic_tac_toe_controller {
 
         rowLoop: for (let i = 0; i < this._countRow; i++) {
             this._winCells = [];
+
             for (let j = 0; j < this._countColumn; j++) {
-                this.checkCell(this._gameField[i][j], playerSymbol);
+                this.addWinCellOrClear(this._gameField[i][j], playerSymbol);
 
                 if (this._winCells.length === this._limitWin) {
                     break rowLoop;
@@ -163,8 +163,9 @@ class Tic_tac_toe_controller {
 
         columnLoop: for (let j = 0; j < this._countColumn; j++) {
             this._winCells = [];
+
             for (let i = 0; i < this._countRow; i++) {
-                this.checkCell(this._gameField[i][j], playerSymbol);
+                this.addWinCellOrClear(this._gameField[i][j], playerSymbol);
 
                 if (this._winCells.length === this._limitWin) {
                     break columnLoop;
@@ -188,7 +189,7 @@ class Tic_tac_toe_controller {
             this._winCells = [];
 
             for (let columnIndex = numberDiagonal; columnIndex >= 0; columnIndex--) {
-                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+                this.addWinCellOrClear(this._gameField[rowIndex][columnIndex], playerSymbol);
 
                 if (this._winCells.length === this._limitWin) {
                     break diagonalLoop;
@@ -208,7 +209,7 @@ class Tic_tac_toe_controller {
             this._winCells = [];
 
             for (let columnIndex = this._countColumn - 1; columnIndex > numberDiagonal - 1; columnIndex--) {
-                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+                this.addWinCellOrClear(this._gameField[rowIndex][columnIndex], playerSymbol);
 
                 if (this._winCells.length === this._limitWin) {
                     break diagonalLoop;
@@ -232,7 +233,7 @@ class Tic_tac_toe_controller {
             let columnIndex = numberDiagonal;
             this._winCells = [];
             for (let rowIndex = 0; columnIndex < this._countColumn; rowIndex++) {
-                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+                this.addWinCellOrClear(this._gameField[rowIndex][columnIndex], playerSymbol);
 
                 if (this._winCells.length === this._limitWin) {
                     break diagonalLoop;
@@ -251,7 +252,7 @@ class Tic_tac_toe_controller {
             let rowIndex = numberDiagonal;
             this._winCells = [];
             for (let columnIndex = 0; columnIndex < this._countRow - numberDiagonal; columnIndex++) {
-                this.checkCell(this._gameField[rowIndex][columnIndex], playerSymbol);
+                this.addWinCellOrClear(this._gameField[rowIndex][columnIndex], playerSymbol);
 
                 if (this._winCells.length === this._limitWin) {
                     break diagonalLoop;
@@ -273,6 +274,7 @@ class Tic_tac_toe_controller {
     checkWin() {
         let isWin = false;
         const winElements = this.collectWinElements(this._currentPlayer);
+        //TODO refactoring
 
         if (winElements != null) {
             this._blockGame = true;

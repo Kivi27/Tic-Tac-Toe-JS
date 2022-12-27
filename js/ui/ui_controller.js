@@ -1,14 +1,9 @@
 class Ui_controller {
-    _drawLabel = "Draw !!!";
 
-    constructor(labelPlayerName, labelInfoGame) {
-        this._labelInfoGame = labelInfoGame;
+    constructor(labelPlayerName) {
         this._labelPlayerName = labelPlayerName;
     }
 
-    updateLabelDraw() {
-        this._labelInfoGame.textContent = this._drawLabel;
-    }
 
     updateLabelPlayerName(player) {
         this._labelPlayerName.textContent = player.getName();
