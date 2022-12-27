@@ -10,7 +10,6 @@
     --hover-reset-button-color: #FAE20A;
 }
 
-
 .container {
     display: flex;
     flex-direction: column;
@@ -167,4 +166,11 @@
 .footer {
     padding: 20px;
     text-align: center;
+}
+
+@media screen and (max-width: 860px) {
+    .tic-tac-toe-game {
+        flex-direction: column;
+        gap: 60px;
+    }
 }
