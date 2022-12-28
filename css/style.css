@@ -68,8 +68,8 @@
 
 
 .tic-tac-toe__button {
-    width: 80px;
-    height: 80px;
+    width: 100%;
+    height: 100%;
     font-weight: 800;
     font-size: 3rem;
     background: none;
