@@ -116,6 +116,14 @@ const uiController = new UiController(labelPlayerName);
 
 const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";
+
+ticTacToeController.setOnLoad(() => {
+    if (ticTacToeController.isWin()) {
+        uiController.addStyleCells(ticTacToeController.getWinCell(), nameWinStyle);
+        ticTacToeController.lockInput();
+    }
+});
+
 ticTacToeController.setOnUpdateUi(() => {
     const currentPlayer = ticTacToeController.getCurrentPlayer();
     uiController.updateLabelPlayerName(currentPlayer);

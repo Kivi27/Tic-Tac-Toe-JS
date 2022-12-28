@@ -50,9 +50,9 @@ class TicTacToeController {
         }
 
         this._currentPlayer = this._players[0];
-        this._onReset(this._gameField);
-        this._blockGame = false;
-        this._OnUpdateUi();
+        this?._onReset(this._gameField);
+        this?._onUpdateUi();
+        this.unlockInput();
     }
 
     getImageField() {
@@ -77,8 +77,8 @@ class TicTacToeController {
     }
 
     setOnUpdateUi(callback) {
-        this._OnUpdateUi = callback;
-        this._OnUpdateUi();
+        this._onUpdateUi = callback;
+        this?._onUpdateUi();
     }
 
     setOnWin(callback) {
@@ -91,6 +91,10 @@ class TicTacToeController {
 
     setOnDraw(callback) {
         this._onDraw = callback;
+    }
+
+    setOnLoad(callback) {
+        this._onLoad = callback;
     }
 
     getIndexCurrentPlayer() {
@@ -124,8 +128,8 @@ class TicTacToeController {
     setStateSave(saveState) {
         this.setImageField(saveState.stateField);
         this.setCurrentPlayer(saveState.indexCurrentPlayer);
-        this.checkWin();
-        this._OnUpdateUi();
+        this?._onLoad();
+        this?._onUpdateUi();
     }
 
     addWinCellOrClear(cell, playerSymbol) {
@@ -138,6 +142,14 @@ class TicTacToeController {
 
     getWinCell() {
         return this._winCells.length === this._limitWin ? this._winCells : null;
+    }
+
+    lockInput() {
+        this._blockGame = true;
+    }
+
+    unlockInput() {
+        this._blockGame = false;
     }
 
     collectWinElementsHorizontal(player) {
@@ -271,18 +283,9 @@ class TicTacToeController {
             || this.collectWinSlayerDiagonal(player)
     }
 
-    checkWin() {
-        let isWin = false;
+    isWin() {
         const winElements = this.collectWinElements(this._currentPlayer);
-
-
-        if (winElements != null) {
-            this._blockGame = true;
-            this._onWin(this._currentPlayer, winElements);
-            isWin = true;
-        }
-
-        return isWin;
+        return Boolean(winElements);
     }
 
     gameStep(pressedEvent) {
@@ -293,12 +296,15 @@ class TicTacToeController {
         if (isCellEmpty && isGameLock) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
 
-            if (!this.checkWin()) {
+            if (this.isWin()) {
+                this.lockInput();
+                this?._onWin(this._currentPlayer, this._winCells);
+            } else {
                 this.changeCurrentPlayer();
-                this._OnUpdateUi();
+                this?._onUpdateUi();
 
                 if (this.isFieldFill()) {
-                    this._onDraw(this._gameField);
+                    this?._onDraw(this._gameField);
                 }
             }
         }
