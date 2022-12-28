@@ -3,7 +3,7 @@ const saveKeyOldCountColumn = "sizeField";
 const defaultSizeTicTacToeField = 3;
 
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-ui__input");
-const resizeController = new NumberControlledInput(inputCountColumnGrid);
+const resizeController = new NumberInput(inputCountColumnGrid);
 const buttonUpSize = document.querySelector(".tic-tac-toe-resize-ui__up-size");
 
 buttonUpSize.addEventListener("click", function () {
