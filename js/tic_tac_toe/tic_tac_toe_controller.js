@@ -274,11 +274,11 @@ class TicTacToeController {
     checkWin() {
         let isWin = false;
         const winElements = this.collectWinElements(this._currentPlayer);
-        // TODO: refactoring
+
 
         if (winElements != null) {
             this._blockGame = true;
-            this._onWin(winElements);
+            this._onWin(this._currentPlayer, winElements);
             isWin = true;
         }
 
