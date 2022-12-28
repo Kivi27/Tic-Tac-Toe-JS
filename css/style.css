@@ -35,9 +35,10 @@
 
 .tic-tac-toe-game {
     display: flex;
+    flex-wrap: wrap;
     justify-content: center;
     align-items: flex-start;
-    gap: 0 60px;
+    gap: 20px 60px;
 }
 
 .tic-tac-toe-field {
@@ -183,11 +184,4 @@
 .footer {
     padding: 20px;
     text-align: center;
-}
-
-@media screen and (max-width: 860px) {
-    .tic-tac-toe-game {
-        flex-direction: column;
-        gap: 60px;
-    }
 }
