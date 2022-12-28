@@ -153,7 +153,10 @@ resetButton.addEventListener("click", () => {
     Saver.saveObj(saveKeyTicTacToeField, ticTacToeController);
 });
 
-window.onstorage = () => tryRestoreTicTacToeState();
+window.onstorage = () => {
+    tryRestoreTicTacToeState();
+    tryLoadScores(gameScores, localStorage);
+}
 
 tryRestoreTicTacToeState();
 
