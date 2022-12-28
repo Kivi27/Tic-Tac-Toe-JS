@@ -1,7 +1,8 @@
-class Grid_controller {
+class GridController {
     //TODO dynamic size cell
     _sizeCell = 100;
     _standardUnitSize = "px";
+
     constructor(grid, countRow, countColumn) {
         this._grid = grid;
         this.changeSizeGrid(countRow, countColumn);

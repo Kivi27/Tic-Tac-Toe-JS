@@ -1,4 +1,4 @@
-class Ui_controller {
+class UiController {
 
     constructor(labelPlayerName) {
         this._labelPlayerName = labelPlayerName;

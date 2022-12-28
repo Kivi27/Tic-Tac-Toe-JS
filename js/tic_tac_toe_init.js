@@ -3,7 +3,7 @@ const saveKeyOldCountColumn = "sizeField";
 const defaultSizeTicTacToeField = 3;
 
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-ui__input");
-const resizeController = new Number_controlled_input(inputCountColumnGrid);
+const resizeController = new NumberControlledInput(inputCountColumnGrid);
 const buttonUpSize = document.querySelector(".tic-tac-toe-resize-ui__up-size");
 
 buttonUpSize.addEventListener("click", function () {
@@ -60,24 +60,82 @@ const resetButton = document.querySelector(".tic-tac-toe-setting__reset-button")
 const labelPlayerName = document.querySelector(".tic-tac-toe-game__player-name");
 const countColumnAndRow = resizeController.getValueControlledInput();
 
-const gridController = new Grid_controller(gridTicTacToe, countColumnAndRow, countColumnAndRow);
-const cellsTicTacToe = gridController.getCells();
+const labelGameFirstPlayerScore = document.querySelector(".tic-tac-toe-analytic__game-score-x");
+const labelGameSecondPlayerScore = document.querySelector(".tic-tac-toe-analytic__game-score-o");
+const labelSessionFirstPlayerScore = document.querySelector(".tic-tac-toe-analytic__session-score-x");
+const labelSessionSecondPlayerScore = document.querySelector(".tic-tac-toe-analytic__session-score-o");
 
 const player1 = new Player("Player 1", "X");
 const player2 = new Player("Player 2", "O");
+const players = [player1, player2];
+
+const scoreGameFirstPlayer = new Score(labelGameFirstPlayerScore, player1);
+const scoreSessionFirstPlayer = new Score(labelSessionFirstPlayerScore, player1);
+const scoreGameSecondPlayer = new Score(labelGameSecondPlayerScore, player2);
+const scoreSessionSecondPlayer = new Score(labelSessionSecondPlayerScore, player2);
+
+const gameScores = [scoreGameFirstPlayer, scoreGameSecondPlayer];
+initScore(gameScores, localStorage);
+
+const sessionScores = [scoreSessionFirstPlayer, scoreSessionSecondPlayer];
+initScore(sessionScores, sessionStorage);
+
+scores = [...gameScores, ...sessionScores];
+
+function initScore(scores, storage) {
+    assignStorage(scores, storage);
+    tryLoadScores(scores, storage);
+}
+
+function assignStorage(scores, storage) {
+    for (let score of scores) {
+        score.setOnUpdateUi(() => {
+            const player = score.getPlayer();
+            storage.setItem(player.getGameSymbol(), String(score.getLabelScoreValue()));
+        });
+    }
+}
+
+function tryLoadScores(scores, storage) {
+    for (let score of scores) {
+        const player = score.getPlayer();
+        let valueStorage = storage.getItem(player.getGameSymbol());
+        if (valueStorage) {
+            score.setLabelScoreValue(valueStorage);
+        }
+    }
+}
+
+const gridController = new GridController(gridTicTacToe, countColumnAndRow, countColumnAndRow);
+const cellsTicTacToe = gridController.getCells();
+
 initTicTacToeCells(cellsTicTacToe);
-const ticTacToeController = new Tic_tac_toe_controller(cellsTicTacToe, countColumnAndRow,
-    countColumnAndRow, [player1, player2]);
-const uiController = new Ui_controller(labelPlayerName);
+const ticTacToeController = new TicTacToeController(cellsTicTacToe, countColumnAndRow,
+    countColumnAndRow, players);
+const uiController = new UiController(labelPlayerName);
 
 const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";
+
+ticTacToeController.setOnLoad(() => {
+    if (ticTacToeController.isWin()) {
+        uiController.addStyleCells(ticTacToeController.getWinCell(), nameWinStyle);
+        ticTacToeController.lockInput();
+    }
+});
+
 ticTacToeController.setOnUpdateUi(() => {
     const currentPlayer = ticTacToeController.getCurrentPlayer();
     uiController.updateLabelPlayerName(currentPlayer);
 });
 
-ticTacToeController.setOnWin(winCells => {
+ticTacToeController.setOnWin((winner, winCells) => {
+    scores.forEach(score => {
+       if (score.getPlayer() === winner) {
+           const oldValue = score.getLabelScoreValue();
+           score.setLabelScoreValue(oldValue + 1);
+       }
+    });
     uiController.addStyleCells(winCells, nameWinStyle);
 });
 
@@ -95,7 +153,10 @@ resetButton.addEventListener("click", () => {
     Saver.saveObj(saveKeyTicTacToeField, ticTacToeController);
 });
 
-window.onstorage = () => tryRestoreTicTacToeState();
+window.onstorage = () => {
+    tryRestoreTicTacToeState();
+    tryLoadScores(gameScores, localStorage);
+}
 
 tryRestoreTicTacToeState();
 
