@@ -11,7 +11,7 @@ class Score {
 
     setLabelScoreValue(newValue) {
         this._labelScore.textContent = newValue;
-        this._onUpdateUi();
+        this?._onUpdateUi();
     }
 
     getPlayer() {
