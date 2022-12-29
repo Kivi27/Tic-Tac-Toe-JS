@@ -80,7 +80,7 @@ initScore(gameScores, localStorage);
 const sessionScores = [scoreSessionFirstPlayer, scoreSessionSecondPlayer];
 initScore(sessionScores, sessionStorage);
 
-scores = [...gameScores, ...sessionScores];
+const scores = [...gameScores, ...sessionScores];
 
 function initScore(scores, storage) {
     assignStorage(scores, storage);

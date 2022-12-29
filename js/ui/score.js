@@ -11,7 +11,11 @@ class Score {
 
     setLabelScoreValue(newValue) {
         this._labelScore.textContent = newValue;
-        this?._onUpdateUi();
+
+        const callback = this._onUpdateUi;
+        if (callback) {
+            callback();
+        }
     }
 
     getPlayer() {
