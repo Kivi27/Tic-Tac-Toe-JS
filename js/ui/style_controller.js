@@ -1,12 +1,7 @@
-class UiController {
+class StyleController {
 
-    constructor(labelPlayerName) {
-        this._labelPlayerName = labelPlayerName;
-    }
+    constructor() {
 
-
-    updateLabelPlayerName(player) {
-        this._labelPlayerName.textContent = player.getName();
     }
 
     addStyleCells(allCells, nameStyle) {
