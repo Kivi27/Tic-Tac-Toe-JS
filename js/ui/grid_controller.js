@@ -1,16 +1,25 @@
 class GridController {
-    //TODO dynamic size cell
-    _sizeCell = 100;
-    _standardUnitSize = "px";
+    _maxSizeCell = 100;
 
     constructor(grid, countRow, countColumn) {
         this._grid = grid;
         this.changeSizeGrid(countRow, countColumn);
     }
 
+    calculateFontSize(sizeCell) {
+        return 3 * sizeCell / 100;
+    }
+
     changeSizeGrid(countRow, countColumn) {
-        const columnGrid = (this._sizeCell + this._standardUnitSize + " ").repeat(countColumn);
-        const rowGrid = (this._sizeCell + this._standardUnitSize + " ").repeat(countRow);
+        let sizeCell = screen.width / countColumn;
+
+        if (sizeCell > this._maxSizeCell) {
+            sizeCell = this._maxSizeCell;
+        }
+
+        const columnGrid = `repeat(${countColumn}, ${sizeCell + "px"})`;
+        const rowGrid = `repeat(${countRow}, ${sizeCell + "px"})`;
+
         this._grid.style.gridTemplateColumns = columnGrid;
         this._grid.style.gridTemplateRows = rowGrid;
         const countCell = countRow * countColumn;
@@ -18,7 +27,7 @@ class GridController {
         this.deleteAllCells();
 
         for (let i = 0; i < countCell; i++) {
-            this.addCell();
+            this.addCell(sizeCell);
         }
     }
 
@@ -27,7 +36,7 @@ class GridController {
         allBlockCells.forEach(cell => cell.remove());
     }
 
-    addCell() {
+    addCell(size) {
         const newCell = document.createElement("div");
         newCell.className = "tic_tac-toe__сell";
         newCell.innerHTML = '<button class="tic-tac-toe__button"></button>';
