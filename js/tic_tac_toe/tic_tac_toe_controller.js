@@ -50,8 +50,8 @@ class TicTacToeController {
         }
 
         this._currentPlayer = this._players[0];
-        this?._onReset(this._gameField);
-        this?._onUpdateUi();
+        this._onReset(this._gameField);
+        this._onUpdateUi();
         this.unlockInput();
     }
 
@@ -78,7 +78,7 @@ class TicTacToeController {
 
     setOnUpdateUi(callback) {
         this._onUpdateUi = callback;
-        this?._onUpdateUi();
+        this._onUpdateUi();
     }
 
     setOnWin(callback) {
@@ -128,8 +128,8 @@ class TicTacToeController {
     setStateSave(saveState) {
         this.setImageField(saveState.stateField);
         this.setCurrentPlayer(saveState.indexCurrentPlayer);
-        this?._onLoad();
-        this?._onUpdateUi();
+        this._onLoad();
+        this._onUpdateUi();
     }
 
     addWinCellOrClear(cell, playerSymbol) {
@@ -298,13 +298,13 @@ class TicTacToeController {
 
             if (this.isWin()) {
                 this.lockInput();
-                this?._onWin(this._currentPlayer, this._winCells);
+                this._onWin(this._currentPlayer, this._winCells);
             } else {
                 this.changeCurrentPlayer();
-                this?._onUpdateUi();
+                this._onUpdateUi();
 
                 if (this.isFieldFill()) {
-                    this?._onDraw(this._gameField);
+                    this._onDraw(this._gameField);
                 }
             }
         }

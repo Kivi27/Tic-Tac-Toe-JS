@@ -1,11 +1,12 @@
-class NumberControlledInput {
+class NumberInput {
 
     _lowerLimit = 3;
-    _upperLimit = 10;
+    _upperLimit = 100;
     _valueStep = 1;
 
-    constructor(controlledInput) {
+    constructor(controlledInput, valueStep) {
         this.controlledInput = controlledInput;
+        this._valueStep = valueStep;
     }
 
     increase() {

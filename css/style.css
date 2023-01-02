@@ -2,7 +2,7 @@
     --brand-primary-darken-color: #0B6158;
     --brand-primary-color: #14BDAC;
     --cell-border-color: #0DA192;
-    --cell-border-width: 10px;
+    --cell-border-width: 2px;
     --primary-color: #FFFFFF;
     --ui-background-color: #0f7d71;
     --win-color: #FAE20A;
@@ -13,6 +13,8 @@
 
 .body {
     height: 100vh;
+    background-color: var(--brand-primary-color);
+    color: var(--primary-color);
 }
 
 .container {
@@ -23,8 +25,6 @@
     margin: 0 auto;
     font-family: 'Comic Sans MS', serif;
     font-weight: 700;
-    background-color: var(--brand-primary-color);
-    color: var(--primary-color);
 }
 
 .header__title {
@@ -63,7 +63,9 @@
 }
 
 .tic_tac-toe__сell {
-    border: var(--cell-border-width) solid var(--cell-border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

@@ -1,7 +1,5 @@
 class GridController {
-    //TODO dynamic size cell
-    _sizeCell = 100;
-    _standardUnitSize = "px";
+    _maxSizeCell = 100;
 
     constructor(grid, countRow, countColumn) {
         this._grid = grid;
@@ -9,17 +7,29 @@ class GridController {
     }
 
     changeSizeGrid(countRow, countColumn) {
-        const columnGrid = (this._sizeCell + this._standardUnitSize + " ").repeat(countColumn);
-        const rowGrid = (this._sizeCell + this._standardUnitSize + " ").repeat(countRow);
+        const sizeCell = this.calculateSizeCell(countColumn);
+        const countCell = countRow * countColumn;
+        const columnGrid = `repeat(${countColumn}, ${sizeCell + "px"})`;
+        const rowGrid = `repeat(${countRow}, ${sizeCell + "px"})`;
         this._grid.style.gridTemplateColumns = columnGrid;
         this._grid.style.gridTemplateRows = rowGrid;
-        const countCell = countRow * countColumn;
 
         this.deleteAllCells();
 
         for (let i = 0; i < countCell; i++) {
-            this.addCell();
+            this.addCell(i, countRow, countColumn, sizeCell);
         }
+    }
+
+    calculateSizeCell(countColumn) {
+        const leftIndentation = 30;
+        let sizeCell = (window.innerWidth - leftIndentation) / countColumn;
+
+        if (sizeCell > this._maxSizeCell) {
+            sizeCell = this._maxSizeCell;
+        }
+
+        return sizeCell;
     }
 
     deleteAllCells() {
@@ -27,11 +37,44 @@ class GridController {
         allBlockCells.forEach(cell => cell.remove());
     }
 
-    addCell() {
+    addCell(indexCreated, countRow, countColumn, sizeCell) {
         const newCell = document.createElement("div");
-        newCell.className = "tic_tac-toe__сell";
-        newCell.innerHTML = '<button class="tic-tac-toe__button"></button>';
+        const newGameButton = document.createElement("button");
+        this.setStyleCell(indexCreated, countRow, countColumn, newCell);
+        this.setStyleGameButton(newGameButton, sizeCell);
+        newCell.append(newGameButton);
         this._grid.append(newCell);
+    }
+
+    setStyleCell(indexCreated, countRow, countColumn, cell) {
+        const defaultStyleCell = "tic_tac-toe__сell ";
+        const topStyleCell = "tic-tac-toe__cell_top-border";
+        const rightStyleCell = "tic-tac-toe__cell_right-border";
+        const bottomStyleCell = "tic-tac-toe__cell_bottom-border";
+        const leftStyleCell = "tic-tac-toe__cell_left-border";
+
+        cell.className = defaultStyleCell;
+
+        const isFirstColumn = indexCreated % countColumn === 0;
+        const isFirstRow = indexCreated < countColumn;
+
+        if (isFirstColumn) {
+            cell.className += leftStyleCell + " ";
+        }
+
+        if (isFirstRow) {
+            cell.className += topStyleCell + " ";
+        }
+        cell.className += rightStyleCell + " " + bottomStyleCell;
+    }
+
+    setStyleGameButton(gameButton, sizeCell) {
+        gameButton.className = "tic-tac-toe__button";
+        gameButton.style.fontSize = this.calculateFontSize(sizeCell) + "rem";
+    }
+
+    calculateFontSize(sizeCell) {
+        return 3 * sizeCell / 100;
     }
 
     getCells() {

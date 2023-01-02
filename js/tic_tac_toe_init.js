@@ -1,9 +1,13 @@
 const saveKeyTicTacToeField = "stateGame";
 const saveKeyOldCountColumn = "sizeField";
 const defaultSizeTicTacToeField = 3;
+const defaultSizeStepGrid = 10;
+const defaultPromptStep = "Player's turn:";
+const defaultPromptWin = "Winner:";
+const defaultPromptDraw = "Draw :)";
 
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-ui__input");
-const resizeController = new NumberControlledInput(inputCountColumnGrid);
+const resizeController = new NumberInput(inputCountColumnGrid, defaultSizeStepGrid);
 const buttonUpSize = document.querySelector(".tic-tac-toe-resize-ui__up-size");
 
 buttonUpSize.addEventListener("click", function () {
@@ -58,6 +62,7 @@ function changeSizeTicTacToe(countColumn, countRow) {
 const gridTicTacToe = document.querySelector(".tic-tac-toe-grid");
 const resetButton = document.querySelector(".tic-tac-toe-setting__reset-button");
 const labelPlayerName = document.querySelector(".tic-tac-toe-game__player-name");
+const labelStatusStep = document.querySelector(".tic-tac-toe-game__status-step");
 const countColumnAndRow = resizeController.getValueControlledInput();
 
 const labelGameFirstPlayerScore = document.querySelector(".tic-tac-toe-analytic__game-score-x");
@@ -80,7 +85,7 @@ initScore(gameScores, localStorage);
 const sessionScores = [scoreSessionFirstPlayer, scoreSessionSecondPlayer];
 initScore(sessionScores, sessionStorage);
 
-scores = [...gameScores, ...sessionScores];
+const scores = [...gameScores, ...sessionScores];
 
 function initScore(scores, storage) {
     assignStorage(scores, storage);
@@ -112,21 +117,26 @@ const cellsTicTacToe = gridController.getCells();
 initTicTacToeCells(cellsTicTacToe);
 const ticTacToeController = new TicTacToeController(cellsTicTacToe, countColumnAndRow,
     countColumnAndRow, players);
-const uiController = new UiController(labelPlayerName);
+
+const styleController = new StyleController();
+const currentPlayerInfo = new InformationLabel(labelPlayerName);
+const statusStepInfo = new InformationLabel(labelStatusStep);
 
 const nameWinStyle = "tic-tac-toe__сell_win";
 const nameDrawStyle = "tic-tac-toe__cell_draw";
 
 ticTacToeController.setOnLoad(() => {
     if (ticTacToeController.isWin()) {
-        uiController.addStyleCells(ticTacToeController.getWinCell(), nameWinStyle);
+        styleController.addStyleCells(ticTacToeController.getWinCell(), nameWinStyle);
         ticTacToeController.lockInput();
+        currentPlayerInfo.clear();
+        statusStepInfo.setInfo(defaultPromptWin + " ");
     }
 });
 
 ticTacToeController.setOnUpdateUi(() => {
-    const currentPlayer = ticTacToeController.getCurrentPlayer();
-    uiController.updateLabelPlayerName(currentPlayer);
+    const currentPlayer = ticTacToeController.getCurrentPlayer().getName();
+    currentPlayerInfo.setInfo(currentPlayer);
 });
 
 ticTacToeController.setOnWin((winner, winCells) => {
@@ -136,16 +146,21 @@ ticTacToeController.setOnWin((winner, winCells) => {
            score.setLabelScoreValue(oldValue + 1);
        }
     });
-    uiController.addStyleCells(winCells, nameWinStyle);
+    styleController.addStyleCells(winCells, nameWinStyle);
+    statusStepInfo.setInfo(defaultPromptWin + " " + winner.getName());
+    currentPlayerInfo.clear();
 });
 
 ticTacToeController.setOnReset(allCells => {
-    uiController.removeStyleField(allCells, nameWinStyle);
-    uiController.removeStyleField(allCells, nameDrawStyle);
+    styleController.removeStyleField(allCells, nameWinStyle);
+    styleController.removeStyleField(allCells, nameDrawStyle);
+    statusStepInfo.setInfo(defaultPromptStep);
 });
 
 ticTacToeController.setOnDraw(allCells => {
-    uiController.addStyleField(allCells, nameDrawStyle);
+    styleController.addStyleField(allCells, nameDrawStyle);
+    statusStepInfo.setInfo(defaultPromptDraw);
+    currentPlayerInfo.clear();
 });
 
 resetButton.addEventListener("click", () => {
