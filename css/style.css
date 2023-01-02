@@ -63,7 +63,6 @@
 }
 
 .tic_tac-toe__сell {
-    border: var(--cell-border-width) solid var(--cell-border-color);
     display: flex;
     justify-content: center;
     align-items: center;
