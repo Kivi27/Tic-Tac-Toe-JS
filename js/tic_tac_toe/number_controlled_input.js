@@ -1,7 +1,7 @@
 class NumberControlledInput {
 
     _lowerLimit = 3;
-    _upperLimit = 10;
+    _upperLimit = 100;
     _valueStep = 1;
 
     constructor(controlledInput) {
