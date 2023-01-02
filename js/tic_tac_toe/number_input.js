@@ -4,8 +4,9 @@ class NumberInput {
     _upperLimit = 100;
     _valueStep = 1;
 
-    constructor(controlledInput) {
+    constructor(controlledInput, valueStep) {
         this.controlledInput = controlledInput;
+        this._valueStep = valueStep;
     }
 
     increase() {

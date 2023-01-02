@@ -1,9 +1,10 @@
 const saveKeyTicTacToeField = "stateGame";
 const saveKeyOldCountColumn = "sizeField";
 const defaultSizeTicTacToeField = 3;
+const defaultSizeStepGrid = 10;
 
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-ui__input");
-const resizeController = new NumberInput(inputCountColumnGrid);
+const resizeController = new NumberInput(inputCountColumnGrid, defaultSizeStepGrid);
 const buttonUpSize = document.querySelector(".tic-tac-toe-resize-ui__up-size");
 
 buttonUpSize.addEventListener("click", function () {
