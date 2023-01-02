@@ -22,7 +22,8 @@ class GridController {
     }
 
     calculateSizeCell(countColumn) {
-        let sizeCell = screen.width / countColumn;
+        const leftIndentation = 30;
+        let sizeCell = (screen.width - leftIndentation) / countColumn;
 
         if (sizeCell > this._maxSizeCell) {
             sizeCell = this._maxSizeCell;
