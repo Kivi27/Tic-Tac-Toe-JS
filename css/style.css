@@ -2,7 +2,7 @@
     --brand-primary-darken-color: #0B6158;
     --brand-primary-color: #14BDAC;
     --cell-border-color: #0DA192;
-    --cell-border-width: 10px;
+    --cell-border-width: 2px;
     --primary-color: #FFFFFF;
     --ui-background-color: #0f7d71;
     --win-color: #FAE20A;
@@ -64,6 +64,9 @@
 
 .tic_tac-toe__сell {
     border: var(--cell-border-width) solid var(--cell-border-color);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 

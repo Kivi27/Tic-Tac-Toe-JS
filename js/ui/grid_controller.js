@@ -36,10 +36,13 @@ class GridController {
         allBlockCells.forEach(cell => cell.remove());
     }
 
-    addCell(size) {
+    addCell(sizeCell) {
         const newCell = document.createElement("div");
+        const newGameButton = document.createElement("button");
         newCell.className = "tic_tac-toe__сell";
-        newCell.innerHTML = '<button class="tic-tac-toe__button"></button>';
+        newGameButton.className = "tic-tac-toe__button";
+        newGameButton.style.fontSize = this.calculateFontSize(sizeCell) + "rem";
+        newCell.append(newGameButton);
         this._grid.append(newCell);
     }
 
