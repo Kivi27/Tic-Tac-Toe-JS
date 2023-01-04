@@ -6,21 +6,21 @@ const defaultPromptStep = "Player's turn:";
 const defaultPromptWin = "Winner:";
 const defaultPromptDraw = "Draw :)";
 
-const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-ui__input");
+const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-field__input");
 const resizeController = new NumberInput(inputCountColumnGrid, defaultSizeStepGrid);
-const buttonUpSize = document.querySelector(".tic-tac-toe-resize-ui__up-size");
+const buttonUpSize = document.querySelector(".tic-tac-toe-resize-field__up-size");
 
 buttonUpSize.addEventListener("click", function () {
     resizeController.increase();
 });
 
-const buttonDownSize = document.querySelector(".tic-tac-toe-resize-ui__down-size");
+const buttonDownSize = document.querySelector(".tic-tac-toe-resize-field__down-size");
 
 buttonDownSize.addEventListener("click", function () {
     resizeController.decrease();
 });
 
-const buttonChangeCountColumn = document.querySelector(".tic-tac-toe-resize-ui__button-apply-change");
+const buttonChangeCountColumn = document.querySelector(".tic-tac-toe-resize-field__button-apply-change");
 
 buttonChangeCountColumn.addEventListener("click", function () {
     const countColumn = resizeController.getValueControlledInput();

@@ -27,6 +27,14 @@
     font-weight: 700;
 }
 
+.center-vertical-column {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 20px 0;
+}
+
 .header__title {
     padding: 40px;
     font-size: 2rem;
@@ -125,6 +133,14 @@
     color: var(--hover-reset-button-color);
 }
 
+.tic-tac-toe-setting__common-input {
+    width: 70px;
+    border: none;
+    padding: 0;
+    font-size: 2rem;
+    text-align: center;
+}
+
 .tic-tac-toe-setting__reset-button {
     width: 100%;
     text-transform: uppercase;
@@ -141,22 +157,14 @@
     background-color: var(--ui-background-color);
 }
 
-.tic-tac-toe-resize-ui__input-size {
+.tic-tac-toe-resize-field__input-size {
     width: 100%;
     display: flex;
     align-items: center;
     gap: 20px;
 }
 
-.tic-tac-toe-resize-ui__input {
-    width: 70px;
-    border: none;
-    padding: 0;
-    font-size: 2rem;
-    text-align: center;
-}
-
-.tic-tac-toe-resize-ui__button {
+.tic-tac-toe-resize-field__button {
     padding: 10px;
     font-size: 2rem;
     font-weight: 600;
@@ -164,11 +172,11 @@
     background-color: var(--brand-primary-darken-color);
 }
 
-.tic-tac-toe-resize-ui__button-change-size {
+.tic-tac-toe-resize-field__button-change-size {
     width: 35%;
 }
 
-.tic-tac-toe-resize-ui__button-apply-change {
+.tic-tac-toe-resize-field__button-apply-change {
     width: 100%;
 }
 
