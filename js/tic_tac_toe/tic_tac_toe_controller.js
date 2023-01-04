@@ -1,8 +1,8 @@
 class TicTacToeController {
-    _limitWin = 3;
     _blockGame = false;
 
     constructor(cells, countRow, countColumn, players) {
+        this._limitWin = 3;
         this._countRow = countRow;
         this._countColumn = countColumn;
         this._players = players;
@@ -73,6 +73,12 @@ class TicTacToeController {
             for (let j = 0; j < this._countColumn; j++) {
                 this._gameField[i][j].textContent = newField[i][j];
             }
+        }
+    }
+
+    setLimitWin(value) {
+        if (value > 0) {
+            this._limitWin = value;
         }
     }
 

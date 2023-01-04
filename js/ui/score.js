@@ -5,6 +5,10 @@ class Score {
         this._player = player;
     }
 
+    setOnUpdateUi(callback) {
+        this._onUpdateUi = callback;
+    }
+
     getLabelScoreValue() {
         return Number(this._labelScore.textContent);
     }
@@ -20,9 +24,5 @@ class Score {
 
     getPlayer() {
         return this._player;
-    }
-
-    setOnUpdateUi(callback) {
-        this._onUpdateUi = callback;
     }
 }
