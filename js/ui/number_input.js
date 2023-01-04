@@ -1,12 +1,14 @@
 class NumberInput {
 
-    _lowerLimit = 3;
-    _upperLimit = 100;
-    _valueStep = 1;
-
-    constructor(controlledInput, valueStep) {
+    constructor(controlledInput, lowerLimit, upperLimit, valueStep) {
         this.controlledInput = controlledInput;
+        this._lowerLimit = lowerLimit;
+        this._upperLimit = upperLimit;
         this._valueStep = valueStep;
+    }
+
+    clamp(value, min, max) {
+        return Math.min(Math.max(value, min), max);
     }
 
     increase() {
@@ -28,10 +30,6 @@ class NumberInput {
         return this.controlledInput.value.replace(/\D/g, '');
     }
 
-    clamp(value, min, max) {
-        return Math.min(Math.max(value, min), max);
-    }
-
     getValueControlledInput() {
         return Number(this.controlledInput.value);
     }
@@ -39,5 +37,12 @@ class NumberInput {
     setValueControlledInput(value) {
         this.controlledInput.value = value;
         this.validateRange();
+    }
+
+    setUpperLimit(value) {
+        if (value > 0 && value > this._lowerLimit) {
+            this._upperLimit = value;
+            this.validateRange();
+        }
     }
 }
