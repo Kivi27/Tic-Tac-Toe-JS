@@ -1,6 +1,8 @@
 const saveKeyTicTacToeField = "stateGame";
 const saveKeyOldCountColumn = "sizeField";
 const saveKeyOldCountWinSymbol = "countWinSymbol";
+const nameWinStyle = "tic-tac-toe__сell_win";
+const nameDrawStyle = "tic-tac-toe__cell_draw";
 const defaultPromptStep = "Player's turn:";
 const defaultPromptWin = "Winner:";
 const defaultPromptDraw = "Draw :)";
@@ -11,30 +13,35 @@ const defaultSizeStepGrid = 10;
 const inputCountWinSymbol = document.querySelector(".tic-tac-toe-win-symbol__input");
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-field__input");
 const buttonUpSize = document.querySelector(".tic-tac-toe-resize-field__up-size");
+const buttonDownSize = document.querySelector(".tic-tac-toe-resize-field__down-size");
+const buttonApplySetting = document.querySelector(".tic-tac-toe-setting__apply-button");
 
-const countWinSymbolController = new NumberInput(inputCountWinSymbol, 2, 100, 0);
-const resizeController = new NumberInput(inputCountColumnGrid, 3, 100, defaultSizeStepGrid);
+const countWinSymbolController = new NumberInput(inputCountWinSymbol, defaultCountWinSymbols, 100, 0);
+const resizeController = new NumberInput(inputCountColumnGrid, defaultSizeTicTacToeField, 100, defaultSizeStepGrid);
 
 buttonUpSize.addEventListener("click", function () {
     resizeController.increase();
     changeCountWinSymbol();
 });
 
-const buttonDownSize = document.querySelector(".tic-tac-toe-resize-field__down-size");
+function changeCountWinSymbol() {
+    const countColumn = resizeController.getValidateInput();
+    countWinSymbolController.setUpperLimit(countColumn ** 2);
+}
 
 buttonDownSize.addEventListener("click", function () {
     resizeController.decrease();
     changeCountWinSymbol();
 });
 
-const buttonChangeCountColumn = document.querySelector(".tic-tac-toe-setting__apply-button");
 
-buttonChangeCountColumn.addEventListener("click", function () {
+buttonApplySetting.addEventListener("click", function () {
     const oldCountWinSymbol = Number(localStorage.getItem(saveKeyOldCountWinSymbol));
     const oldCountColumn = Number(localStorage.getItem(saveKeyOldCountColumn));
 
     const countWinSymbol = countWinSymbolController.getValueControlledInput();
     const countColumn = resizeController.getValueControlledInput();
+
     ticTacToeController.setLimitWin(countWinSymbol);
 
     if (oldCountColumn !== countColumn || oldCountWinSymbol !== countWinSymbol) {
@@ -49,6 +56,10 @@ inputCountColumnGrid.addEventListener("input", function () {
     this.value = resizeController.getValidateInput();
 });
 
+inputCountWinSymbol.addEventListener("input", function () {
+    this.value = countWinSymbolController.getValidateInput();
+});
+
 inputCountColumnGrid.addEventListener('focusout', function () {
     resizeController.validateRange();
     changeCountWinSymbol();
@@ -58,20 +69,6 @@ inputCountWinSymbol.addEventListener('focusout', function () {
     countWinSymbolController.validateRange();
     changeCountWinSymbol();
 })
-
-function changeCountWinSymbol() {
-    const countColumn = resizeController.getValidateInput();
-    countWinSymbolController.setUpperLimit(countColumn ** 2);
-}
-
-function initTicTacToeCells(cellsTicTacToe) {
-    for (let cellTicTacToe of cellsTicTacToe) {
-        cellTicTacToe.addEventListener("click", (pressedButton) => {
-            ticTacToeController.gameStep(pressedButton);
-            Saver.saveObj(saveKeyTicTacToeField, ticTacToeController);
-        });
-    }
-}
 
 function changeSizeTicTacToe(countColumn, countRow) {
     gridController.changeSizeGrid(countColumn, countRow);
@@ -137,15 +134,22 @@ const gridController = new GridController(gridTicTacToe, countColumnAndRow, coun
 const cellsTicTacToe = gridController.getCells();
 
 initTicTacToeCells(cellsTicTacToe);
+
+function initTicTacToeCells(cells) {
+    for (let cell of cells) {
+        cell.addEventListener("click", (pressedButton) => {
+            ticTacToeController.gameStep(pressedButton);
+            Saver.saveObj(saveKeyTicTacToeField, ticTacToeController);
+        });
+    }
+}
+
 const ticTacToeController = new TicTacToeController(cellsTicTacToe, countColumnAndRow,
     countColumnAndRow, players);
 
 const styleController = new StyleController();
 const currentPlayerInfo = new InformationLabel(labelPlayerName);
 const statusStepInfo = new InformationLabel(labelStatusStep);
-
-const nameWinStyle = "tic-tac-toe__сell_win";
-const nameDrawStyle = "tic-tac-toe__cell_draw";
 
 ticTacToeController.setOnLoad(() => {
     if (ticTacToeController.isWin()) {
@@ -206,6 +210,7 @@ function tryRestoreTicTacToeState() {
     } else if (!oldCountWinSymbol) {
         localStorage.setItem(saveKeyOldCountColumn, String(defaultCountWinSymbols));
     } else if (localStorage.getItem(saveKeyTicTacToeField) && localStorage.getItem(saveKeyOldCountWinSymbol)) {
+        countWinSymbolController.setValueControlledInput(oldCountWinSymbol);
         resizeController.setValueControlledInput(oldSizeField);
         changeSizeTicTacToe(oldSizeField, oldSizeField);
         Saver.loadObj(saveKeyTicTacToeField, ticTacToeController);
