@@ -160,7 +160,20 @@ ticTacToeController.setOnLoad(() => {
         currentPlayerInfo.clear();
         statusStepInfo.setInfo(defaultPromptWin + " ");
     }
+
+    const isDraw = ticTacToeController.isFieldFill();
+
+    if (isDraw) {
+        const gameField = ticTacToeController.getField();
+        displayDraw(gameField);
+    }
 });
+
+function displayDraw(allCells) {
+    styleController.addStyleField(allCells, nameDrawStyle);
+    statusStepInfo.setInfo(defaultPromptDraw);
+    currentPlayerInfo.clear();
+}
 
 ticTacToeController.setOnUpdateUi(() => {
     const currentPlayer = ticTacToeController.getCurrentPlayer().getName();
@@ -186,9 +199,7 @@ ticTacToeController.setOnReset(allCells => {
 });
 
 ticTacToeController.setOnDraw(allCells => {
-    styleController.addStyleField(allCells, nameDrawStyle);
-    statusStepInfo.setInfo(defaultPromptDraw);
-    currentPlayerInfo.clear();
+    displayDraw(allCells);
 });
 
 resetButton.addEventListener("click", () => {

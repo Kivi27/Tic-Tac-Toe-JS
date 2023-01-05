@@ -135,7 +135,11 @@ class TicTacToeController {
         this.setImageField(saveState.stateField);
         this.setCurrentPlayer(saveState.indexCurrentPlayer);
         this._onLoad();
-        this._onUpdateUi();
+        const isWin = this.isWin();
+
+        if (isWin) {
+            this._onUpdateUi();
+        }
     }
 
     addWinCellOrClear(cell, playerSymbol) {
@@ -148,6 +152,10 @@ class TicTacToeController {
 
     getWinCell() {
         return this._winCells.length === this._limitWin ? this._winCells : null;
+    }
+
+    getField() {
+        return this._gameField;
     }
 
     lockInput() {
