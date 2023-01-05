@@ -286,11 +286,12 @@ class TicTacToeController {
         return this.collectWinElementsHorizontal(player)
             || this.collectWinElementsVertical(player)
             || this.collectWinMainDiagonal(player)
-            || this.collectWinSlayerDiagonal(player)
+            || this.collectWinSlayerDiagonal(player);
     }
 
     isWin() {
         const winElements = this.collectWinElements(this._currentPlayer);
+        
         return Boolean(winElements);
     }
 
