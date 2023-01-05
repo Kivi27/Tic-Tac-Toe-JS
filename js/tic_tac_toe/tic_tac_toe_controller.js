@@ -286,33 +286,44 @@ class TicTacToeController {
         return this.collectWinElementsHorizontal(player)
             || this.collectWinElementsVertical(player)
             || this.collectWinMainDiagonal(player)
-            || this.collectWinSlayerDiagonal(player)
+            || this.collectWinSlayerDiagonal(player);
     }
 
     isWin() {
         const winElements = this.collectWinElements(this._currentPlayer);
+
         return Boolean(winElements);
     }
 
     gameStep(pressedEvent) {
         const pressedButton = pressedEvent.target;
-        const isGameLock = !this._blockGame;
-        const isCellEmpty = pressedButton.textContent === "";
+        const isCellAvailable = this.checkCellAvailable(pressedButton);
 
-        if (isCellEmpty && isGameLock) {
-            pressedButton.textContent = this._currentPlayer.getGameSymbol();
+        if (!isCellAvailable) return;
 
-            if (this.isWin()) {
-                this.lockInput();
-                this._onWin(this._currentPlayer, this._winCells);
-            } else {
-                this.changeCurrentPlayer();
-                this._onUpdateUi();
+        pressedButton.textContent = this._currentPlayer.getGameSymbol();
+        const isWin = this.isWin();
 
-                if (this.isFieldFill()) {
-                    this._onDraw(this._gameField);
-                }
-            }
+        if (isWin) {
+            this.lockInput();
+            this._onWin(this._currentPlayer, this._winCells);
+        } else {
+            this.changeCurrentPlayer();
+            this._onUpdateUi();
+
+            const isFieldNotFill = !this.isFieldFill();
+
+            if (isFieldNotFill) return;
+
+            this._onDraw(this._gameField);
         }
     }
+
+    checkCellAvailable(pressedButton) {
+        const isGameUnlock = !this._blockGame;
+        const isCellEmpty = pressedButton.textContent === "";
+
+        return isGameUnlock && isCellEmpty;
+    }
+
 }

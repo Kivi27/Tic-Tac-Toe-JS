@@ -8,7 +8,9 @@ const defaultPromptWin = "Winner:";
 const defaultPromptDraw = "Draw :)";
 const defaultSizeTicTacToeField = 3;
 const defaultCountWinSymbols = 2;
-const defaultSizeStepGrid = 10;
+const defaultSizeStepGrid = 1;
+const defaultMaxCountColumn = 10;
+const defaultMaxCountSymbolWin = defaultMaxCountColumn ** 2;
 
 const inputCountWinSymbol = document.querySelector(".tic-tac-toe-win-symbol__input");
 const inputCountColumnGrid = document.querySelector(".tic-tac-toe-resize-field__input");
@@ -16,8 +18,8 @@ const buttonUpSize = document.querySelector(".tic-tac-toe-resize-field__up-size"
 const buttonDownSize = document.querySelector(".tic-tac-toe-resize-field__down-size");
 const buttonApplySetting = document.querySelector(".tic-tac-toe-setting__apply-button");
 
-const countWinSymbolController = new NumberInput(inputCountWinSymbol, defaultCountWinSymbols, 100, 0);
-const resizeController = new NumberInput(inputCountColumnGrid, defaultSizeTicTacToeField, 100, defaultSizeStepGrid);
+const countWinSymbolController = new NumberInput(inputCountWinSymbol, defaultCountWinSymbols, defaultMaxCountSymbolWin, 0);
+const resizeController = new NumberInput(inputCountColumnGrid, defaultSizeTicTacToeField, defaultMaxCountColumn, defaultSizeStepGrid);
 
 buttonUpSize.addEventListener("click", function () {
     resizeController.increase();
