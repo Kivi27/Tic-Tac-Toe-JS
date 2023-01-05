@@ -15,8 +15,8 @@ class Score {
 
     setLabelScoreValue(newValue) {
         this._labelScore.textContent = newValue;
-
         const callback = this._onUpdateUi;
+
         if (callback) {
             callback();
         }
