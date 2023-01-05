@@ -301,8 +301,9 @@ class TicTacToeController {
 
         if (isCellEmpty && isGameLock) {
             pressedButton.textContent = this._currentPlayer.getGameSymbol();
+            const isWin = this.isWin();
 
-            if (this.isWin()) {
+            if (isWin) {
                 this.lockInput();
                 this._onWin(this._currentPlayer, this._winCells);
             } else {
