@@ -291,7 +291,7 @@ class TicTacToeController {
 
     isWin() {
         const winElements = this.collectWinElements(this._currentPlayer);
-        
+
         return Boolean(winElements);
     }
 
