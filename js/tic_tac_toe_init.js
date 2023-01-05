@@ -8,8 +8,8 @@ const defaultPromptWin = "Winner:";
 const defaultPromptDraw = "Draw :)";
 const defaultSizeTicTacToeField = 3;
 const defaultCountWinSymbols = 2;
-const defaultSizeStepGrid = 1;
-const defaultMaxCountColumn = 10;
+const defaultSizeStepGrid = 10;
+const defaultMaxCountColumn = 100;
 const defaultMaxCountSymbolWin = defaultMaxCountColumn ** 2;
 
 const inputCountWinSymbol = document.querySelector(".tic-tac-toe-win-symbol__input");
